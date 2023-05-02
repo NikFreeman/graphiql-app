@@ -1,0 +1,12 @@
+.footer-container {
+    align-items: center;
+}
+
+.footer-logo {
+    justify-self: center;
+    transition: 0.2s ease;
+}
+
+.footer-logo:hover {
+    filter: invert(0.30);
+}
