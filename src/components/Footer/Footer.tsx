@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Link, Image, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Box, Text, Link, Image, Grid, GridItem, Show } from '@chakra-ui/react';
 import './Footer.css';
 
 export const Footer = () => {
@@ -14,7 +14,7 @@ export const Footer = () => {
       className="footer-container"
     >
       <GridItem>
-        <Box w="10rem" className="footer-logo">
+        <Box w="10rem" className="footer-logo" mx="auto" opacity="0.9" _hover={{ opacity: '1' }}>
           <Link href="https://rs.school/react/">
             <Image
               style={{ filter: 'invert(1)' }}
@@ -25,19 +25,21 @@ export const Footer = () => {
         </Box>
       </GridItem>
       <GridItem>
-        <Text fontSize="2xl" color="white">
-          2023
-        </Text>
+        <Show breakpoint="(min-width: 400px)">
+          <Text fontSize="24px" color="white" opacity="0.9">
+            2023
+          </Text>
+        </Show>
       </GridItem>
       <GridItem>
-        <Flex flexDirection="column">
-          <Link color="white" href="https://github.com/NikFreeman">
+        <Flex flexDirection="column" opacity="0.9">
+          <Link color="white" href="https://github.com/NikFreeman" _hover={{ opacity: '1' }}>
             NikFreeman
           </Link>
-          <Link color="white" href="https://github.com/Bonus156">
+          <Link color="white" href="https://github.com/Bonus156" _hover={{ opacity: '1' }}>
             Bonus156
           </Link>
-          <Link color="white" href="https://github.com/rockmonolit">
+          <Link color="white" href="https://github.com/rockmonolit" _hover={{ opacity: '1' }}>
             Rockmonolit
           </Link>
         </Flex>

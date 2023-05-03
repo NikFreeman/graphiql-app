@@ -8,7 +8,13 @@ interface ButtonProps {
 
 export const ToggleButton = (props: ButtonProps) => {
   return (
-    <Button colorScheme="blackAlpha" variant="ghost" color="white" onClick={props.handler}>
+    <Button
+      colorScheme="blackAlpha"
+      variant="ghost"
+      color="white"
+      onClick={props.handler}
+      minW="80px"
+    >
       {props.label}
     </Button>
   );

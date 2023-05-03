@@ -6,7 +6,3 @@
     justify-self: center;
     transition: 0.2s ease;
 }
-
-.footer-logo:hover {
-    filter: invert(0.30);
-}
