@@ -1,9 +1,16 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import Router from './routes/route';
+import { ChakraProvider } from '@chakra-ui/react';
 
 function App() {
   return (
     <>
-      <div className="card">Hello world!</div>
+      <ChakraProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </ChakraProvider>
     </>
   );
 }
