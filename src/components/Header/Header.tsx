@@ -6,9 +6,11 @@ import './Header.css';
 
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
+  const [isHeaderSticky, setHeaderSticky] = useState(false);
 
   const dummyAuthorization = () => {
     isAuthorized ? setAuthorization(false) : setAuthorization(true);
+    setHeaderSticky(isAuthorized ? true : false);
   };
 
   return (
@@ -25,6 +27,8 @@ export const Header = () => {
         templateColumns="repeat(3, 1fr)"
         gap={5}
         className="header-container"
+        transition="0.3s"
+        style={{ backgroundColor: isHeaderSticky ? 'black' : '#322d59' }}
       >
         <GridItem>
           <MainButton label="GraphiQL" source="#" />
@@ -47,9 +51,10 @@ export const Header = () => {
             )}
             {isAuthorized && (
               <SlideFade in={isAuthorized}>
-                <Box minW="170px">
-                  <MainButton label="Go to Main Page" source="#" handler={dummyAuthorization} />
-                </Box>
+                <ButtonGroup variant="ghost">
+                  <MainButton label="Go to Main Page" source="#" />
+                  <MainButton label="Sign Out" source="#" handler={dummyAuthorization} />
+                </ButtonGroup>
               </SlideFade>
             )}
           </ButtonGroup>
