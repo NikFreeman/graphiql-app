@@ -1,15 +1,20 @@
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Router from './routes/route';
 import { ChakraProvider } from '@chakra-ui/react';
+import { Suspense, lazy } from 'react';
+import Loading from './components/loading';
+
+const Router = lazy(() => import('./routes/route'));
 
 function App() {
   return (
     <>
       <ChakraProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <Suspense fallback={<Loading />}>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </Suspense>
       </ChakraProvider>
     </>
   );
