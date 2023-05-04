@@ -1,10 +1,14 @@
-import { Flex, Text, Image } from '@chakra-ui/react';
+import { Flex, Text, Image, useMediaQuery } from '@chakra-ui/react';
 import nickImg from '../assets/images/profile-nick.png';
 import bonusImg from '../assets/images/profile-bonus.png';
 import rockImg from '../assets/images/profile-rock.png';
 import sloth from '../assets/images/rs-sloth.png';
 
 export const WelcomePage = () => {
+  const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
+  const [isSmallerThan700] = useMediaQuery('(max-width: 700px)');
+  const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+
   return (
     <Flex
       className="welcome-container"
@@ -19,7 +23,7 @@ export const WelcomePage = () => {
         justify="center"
         align="center"
         flexDir="column"
-        px="15vw"
+        px={isSmallerThan900 ? '5vw' : '15vw'}
         py="5vh"
         gap="1rem"
       >
@@ -33,16 +37,19 @@ export const WelcomePage = () => {
           borderBottomLeftRadius="0"
           borderTopLeftRadius="1rem"
           borderTopRightRadius="0"
+          bg="#ffffff1c"
         >
-          <Image
-            src={nickImg}
-            alt="NikFreeman Photo"
-            w="250px"
-            h="250px"
-            alignSelf="center"
-            rounded="md"
-            boxShadow="sm"
-          ></Image>
+          {!isSmallerThan700 && (
+            <Image
+              src={nickImg}
+              alt="Bonus156 Photo"
+              w="250px"
+              h="250px"
+              alignSelf="center"
+              rounded="md"
+              boxShadow="sm"
+            ></Image>
+          )}
           <Flex flexDir="column" gap="1rem">
             <Text fontSize="4xl">NikFreeman</Text>
             <Text fontSize="xl" align="justify">
@@ -65,15 +72,17 @@ export const WelcomePage = () => {
               the project, from architecture design to feature implementation.
             </Text>
           </Flex>
-          <Image
-            src={bonusImg}
-            alt="Bonus156 Photo"
-            w="250px"
-            h="250px"
-            alignSelf="center"
-            rounded="md"
-            boxShadow="sm"
-          ></Image>
+          {!isSmallerThan700 && (
+            <Image
+              src={bonusImg}
+              alt="Bonus156 Photo"
+              w="250px"
+              h="250px"
+              alignSelf="center"
+              rounded="md"
+              boxShadow="sm"
+            ></Image>
+          )}
         </Flex>
         <Flex
           gap="3vw"
@@ -84,16 +93,19 @@ export const WelcomePage = () => {
           borderBottomLeftRadius="0"
           borderTopLeftRadius="1rem"
           borderTopRightRadius="0"
+          bg="#ffffff1c"
         >
-          <Image
-            src={rockImg}
-            alt="Rockmonolit Photo"
-            w="250px"
-            h="250px"
-            alignSelf="center"
-            rounded="md"
-            boxShadow="sm"
-          ></Image>
+          {!isSmallerThan700 && (
+            <Image
+              src={rockImg}
+              alt="Bonus156 Photo"
+              w="250px"
+              h="250px"
+              alignSelf="center"
+              rounded="md"
+              boxShadow="sm"
+            ></Image>
+          )}
           <Flex flexDir="column" gap="1rem">
             <Text fontSize="4xl">Rockmonolit</Text>
             <Text fontSize="xl" align="justify">
@@ -113,7 +125,7 @@ export const WelcomePage = () => {
         justify="center"
         align="center"
         flexDir="column"
-        px="15vw"
+        px={isSmallerThan600 ? '5vw' : '15vw'}
         py="5vh"
         gap="1rem"
       >
@@ -130,7 +142,15 @@ export const WelcomePage = () => {
           applications.
         </Text>
       </Flex>
-      <Flex w="100%" justify="center" align="center" flexDir="column" px="15vw" py="5vh" gap="1rem">
+      <Flex
+        w="100%"
+        justify="center"
+        align="center"
+        flexDir="column"
+        px={isSmallerThan600 ? '5vw' : '15vw'}
+        py="5vh"
+        gap="1rem"
+      >
         <Text fontSize="6xl">Information about the course</Text>
         <Text fontSize="xl" align="justify">
           The Rolling Scopes School offers a comprehensive course on React, covering topics such as

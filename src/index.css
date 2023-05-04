@@ -2,6 +2,7 @@
   font-family: 'Oswald', sans-serif;
   line-height: 1.5;
   box-sizing: border-box;
+  height: auto;
 
   width: 100vw;
 
@@ -26,6 +27,7 @@ body {
   place-items: center;
   width: 100vw;
   min-width: 320px;
+  height: auto;
   min-height: 100vh;
   box-sizing: border-box;
 }
