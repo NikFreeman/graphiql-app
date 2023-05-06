@@ -1,4 +1,10 @@
+import { EditorArea } from '../components/editorArea';
+
 function Editor() {
-  return <div>Editor!</div>;
+  return (
+    <div>
+      <EditorArea />
+    </div>
+  );
 }
 export default Editor;
