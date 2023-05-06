@@ -3,6 +3,7 @@ import { Button } from '@chakra-ui/react';
 
 interface ButtonProps {
   label: string;
+  hasBorder?: boolean;
   handler?: MouseEventHandler;
 }
 
@@ -14,6 +15,7 @@ export const ToggleButton = (props: ButtonProps) => {
       color="white"
       onClick={props.handler}
       minW="80px"
+      border={props.hasBorder ? 'solid 1px' : ''}
     >
       {props.label}
     </Button>

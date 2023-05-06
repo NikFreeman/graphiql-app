@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { MainButton } from '../Buttons/MainButton';
+import { LinkButton } from '../Buttons/LinkButton';
 import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
 
@@ -51,7 +51,7 @@ export const Header = () => {
           {!isSmallerThan600 && (
             <>
               <GridItem>
-                <MainButton label="GraphiQL" source="#" />
+                <LinkButton label="GraphiQL" source="#" />
               </GridItem>
               <GridItem>
                 <Text fontSize="2xl" color="white">
@@ -60,20 +60,24 @@ export const Header = () => {
               </GridItem>
               <GridItem>
                 <ButtonGroup variant="ghost">
-                  <ToggleButton label="ENG" />
+                  <ToggleButton label="ENG" hasBorder={false} />
                   {!isAuthorized && (
                     <SlideFade in={!isAuthorized}>
                       <ButtonGroup variant="ghost">
-                        <MainButton label="Sign In" source="#" handler={dummyAuthorization} />
-                        <MainButton label="Sign Up" source="#" />
+                        <ToggleButton
+                          label="Sign In"
+                          hasBorder={true}
+                          handler={dummyAuthorization}
+                        />
+                        <ToggleButton label="Sign Up" hasBorder={true} />
                       </ButtonGroup>
                     </SlideFade>
                   )}
                   {isAuthorized && (
                     <SlideFade in={isAuthorized}>
                       <ButtonGroup variant="ghost">
-                        <MainButton label="Go to Main Page" source="#" />
-                        <MainButton label="Sign Out" source="#" handler={dummyAuthorization} />
+                        <LinkButton label="Go to Main Page" source="#" />
+                        <LinkButton label="Sign Out" source="#" handler={dummyAuthorization} />
                       </ButtonGroup>
                     </SlideFade>
                   )}
@@ -107,10 +111,31 @@ export const Header = () => {
         </Grid>
         {isSmallerThan600 && (
           <Collapse in={isModalOpen} animateOpacity>
-            <Flex pos={'absolute'} bg={'black'} w={'100%'}>
-              <Text fontSize="6xl" color="white">
-                Burger!
-              </Text>
+            <Flex
+              pos={'absolute'}
+              bg={'black'}
+              w={'100%'}
+              gap={'1rem'}
+              p={'2rem'}
+              flexDir={'column'}
+            >
+              <ToggleButton label="Selected Language: ENG" hasBorder={true} />
+              {!isAuthorized && (
+                <SlideFade in={!isAuthorized}>
+                  <Flex flexDir={'column'} gap={'1rem'}>
+                    <ToggleButton hasBorder={true} label="Sign In" handler={dummyAuthorization} />
+                    <ToggleButton hasBorder={true} label="Sign Up" />
+                  </Flex>
+                </SlideFade>
+              )}
+              {isAuthorized && (
+                <SlideFade in={isAuthorized}>
+                  <Flex flexDir={'column'} gap={'1rem'}>
+                    <LinkButton label="Go to Main Page" source="#" width="100%" />
+                    <ToggleButton hasBorder={true} label="Sign Out" handler={dummyAuthorization} />
+                  </Flex>
+                </SlideFade>
+              )}
             </Flex>
           </Collapse>
         )}
