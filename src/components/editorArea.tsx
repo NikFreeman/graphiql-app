@@ -10,7 +10,7 @@ export function EditorArea() {
   // const dispatch = useAppDispatch();
   const onSubmit = async () => {
     const resp = await makeRequest(request);
-    setResponse(JSON.stringify(resp));
+    setResponse(JSON.stringify(resp, null, '\t'));
   };
 
   return (
