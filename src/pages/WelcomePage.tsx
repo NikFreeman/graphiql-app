@@ -3,6 +3,7 @@ import nickImg from '../assets/images/profile-nick.png';
 import bonusImg from '../assets/images/profile-bonus.png';
 import rockImg from '../assets/images/profile-rock.png';
 import sloth from '../assets/images/rs-sloth.png';
+import spinner from '../assets/images/spinner.gif';
 
 export const WelcomePage = () => {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
@@ -48,6 +49,7 @@ export const WelcomePage = () => {
               alignSelf="center"
               rounded="md"
               boxShadow="sm"
+              fallbackSrc={spinner}
             ></Image>
           )}
           <Flex flexDir="column" gap="1rem">
@@ -81,6 +83,7 @@ export const WelcomePage = () => {
               alignSelf="center"
               rounded="md"
               boxShadow="sm"
+              fallbackSrc={spinner}
             ></Image>
           )}
         </Flex>
@@ -104,6 +107,7 @@ export const WelcomePage = () => {
               alignSelf="center"
               rounded="md"
               boxShadow="sm"
+              fallbackSrc={spinner}
             ></Image>
           )}
           <Flex flexDir="column" gap="1rem">
@@ -160,7 +164,7 @@ export const WelcomePage = () => {
           experienced instructors and a supportive community, the Rolling Scopes React course is an
           excellent starting point for anyone looking to learn this popular JavaScript library.
         </Text>
-        <Image src={sloth} alt="RS School Sloth" w="250px" h="auto"></Image>
+        <Image src={sloth} alt="RS School Sloth" w="250px" h="auto" fallbackSrc={spinner}></Image>
       </Flex>
     </Flex>
   );

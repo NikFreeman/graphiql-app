@@ -51,7 +51,9 @@ export const Header = () => {
           {!isSmallerThan600 && (
             <>
               <GridItem>
-                <LinkButton label="GraphiQL" source="#" />
+                <ButtonGroup variant="ghost">
+                  <LinkButton label="GraphiQL" source="#" />
+                </ButtonGroup>
               </GridItem>
               <GridItem>
                 <Text fontSize="2xl" color="white">
@@ -77,7 +79,11 @@ export const Header = () => {
                     <SlideFade in={isAuthorized}>
                       <ButtonGroup variant="ghost">
                         <LinkButton label="Go to Main Page" source="#" />
-                        <LinkButton label="Sign Out" source="#" handler={dummyAuthorization} />
+                        <ToggleButton
+                          label="Sign Out"
+                          hasBorder={true}
+                          handler={dummyAuthorization}
+                        />
                       </ButtonGroup>
                     </SlideFade>
                   )}
