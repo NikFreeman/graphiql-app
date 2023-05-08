@@ -22,9 +22,10 @@ import { makeRequest } from '../utils/request';
 export function EditorArea() {
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
+  const [variables, setVariables] = useState({});
   // const dispatch = useAppDispatch();
   const onSubmit = async () => {
-    const resp = await makeRequest(request);
+    const resp = await makeRequest(request, variables);
     setResponse(JSON.stringify(resp, null, '\t'));
   };
 
@@ -35,7 +36,7 @@ export function EditorArea() {
         flexDir={'column'}
         rowSpan={1}
         colSpan={1}
-        minHeight={'50vh'}
+        minHeight={'70vh'}
         height={'100%'}
         gap={2}
       >
@@ -53,7 +54,7 @@ export function EditorArea() {
               <AccordionPanel px={0}>
                 <TabPanels>
                   <TabPanel p={0}>
-                    <Textarea />
+                    <Textarea onChange={(e) => setVariables(JSON.parse(e.target.value))} />
                   </TabPanel>
                   <TabPanel p={0}>
                     <Textarea />
