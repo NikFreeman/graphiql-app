@@ -16,7 +16,7 @@ export const ToggleButton = (props: ButtonProps) => {
       onClick={props.handler}
       minW="80px"
       h={'40px'}
-      border={props.hasBorder ? 'solid 1px' : ''}
+      border={props.hasBorder ? 'solid 1px' : 'solid 1px transparent'}
     >
       {props.label}
     </Button>

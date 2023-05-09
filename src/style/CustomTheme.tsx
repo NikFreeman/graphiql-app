@@ -23,7 +23,8 @@ const theme = extendTheme({
         borderTopRightRadius: '0',
         minW: '80px',
         opacity: '0.9',
-        _hover: { opacity: '1' },
+        padding: '0.6em 1.2em',
+        _hover: { opacity: '1', borderColor: '#695bd3' },
       },
       Text: {
         baseStyle: {
@@ -35,6 +36,8 @@ const theme = extendTheme({
         baseStyle: {
           fontSize: ['17px', '14px'],
           fontWeight: '200',
+          opacity: '0.9',
+          _hover: { opacity: '1' },
         },
       },
     },

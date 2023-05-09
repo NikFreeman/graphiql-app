@@ -20,12 +20,13 @@ export const LinkButton = (props: ButtonProps) => {
       borderBottomLeftRadius="0"
       borderTopLeftRadius="1rem"
       borderTopRightRadius="0"
-      px={'16px'}
+      p={'0.6em 1.2em'}
       alignSelf={'center'}
       border={'solid 1px'}
       opacity="0.9"
       pt={'7px'}
       minWidth={'max-content'}
+      transition={'border-color 0.25s'}
       _hover={{ opacity: '1', borderColor: '#695bd3' }}
     >
       {props.label}

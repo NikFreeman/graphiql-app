@@ -15,18 +15,20 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { LinkButton } from '../Buttons/LinkButton';
 import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
+import { useScrollPercentage } from '../../hooks/scrollPercentage';
 
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
-  const [isHeaderSticky, setHeaderSticky] = useState(false);
+  //const [isHeaderSticky, setHeaderSticky] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
   const { onToggle } = useDisclosure();
 
+  const scrollPercentage = useScrollPercentage();
+
   const dummyAuthorization = () => {
     isAuthorized ? setAuthorization(false) : setAuthorization(true);
-    setHeaderSticky(isAuthorized ? true : false);
   };
 
   if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
@@ -36,7 +38,7 @@ export const Header = () => {
       <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
         <Text fontSize={isSmallerThan600 ? '2xl' : '6xl'}>GraphiQL by Musical Trio</Text>
       </Flex>
-      <Flex flexDir="column" pos={'sticky'} top={'0'}>
+      <Flex flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
           as="header"
           bg="black"
@@ -48,13 +50,18 @@ export const Header = () => {
           gap={5}
           className="header-container"
           transition="0.3s"
-          style={{ backgroundColor: isHeaderSticky ? 'black' : '#322d59' }}
+          style={{
+            boxShadow:
+              scrollPercentage > 50
+                ? '0px -15px 24px -2px rgba(255, 255, 255, 0.35) inset'
+                : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset',
+          }}
         >
           {!isSmallerThan600 && (
             <>
               <GridItem>
                 <ButtonGroup variant="ghost">
-                  <LinkButton label="GraphiQL" source="#" />
+                  <LinkButton label="GraphiQL" source="https://www.npmjs.com/package/graphiql" />
                 </ButtonGroup>
               </GridItem>
               <GridItem>

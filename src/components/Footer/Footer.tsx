@@ -32,14 +32,29 @@ export const Footer = () => {
         </Show>
       </GridItem>
       <GridItem>
-        <Flex flexDirection="column" opacity="0.9">
-          <Link color="white" href="https://github.com/NikFreeman" _hover={{ opacity: '1' }}>
+        <Flex flexDirection="column">
+          <Link
+            color="white"
+            href="https://github.com/NikFreeman"
+            opacity="0.9"
+            _hover={{ opacity: '1' }}
+          >
             NikFreeman
           </Link>
-          <Link color="white" href="https://github.com/Bonus156" _hover={{ opacity: '1' }}>
+          <Link
+            color="white"
+            href="https://github.com/Bonus156"
+            opacity="0.9"
+            _hover={{ opacity: '1' }}
+          >
             Bonus156
           </Link>
-          <Link color="white" href="https://github.com/rockmonolit" _hover={{ opacity: '1' }}>
+          <Link
+            color="white"
+            href="https://github.com/rockmonolit"
+            opacity="0.9"
+            _hover={{ opacity: '1' }}
+          >
             Rockmonolit
           </Link>
         </Flex>

@@ -1,26 +1,22 @@
-import { Flex, Text, Image, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Text, Image, useMediaQuery, Fade } from '@chakra-ui/react';
 import nickImg from '../assets/images/profile-nick.png';
 import bonusImg from '../assets/images/profile-bonus.png';
 import rockImg from '../assets/images/profile-rock.png';
 import sloth from '../assets/images/rs-sloth.png';
 import spinner from '../assets/images/spinner.gif';
+import { useScrollPercentage } from '../hooks/scrollPercentage';
 
 export const WelcomePage = () => {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan700] = useMediaQuery('(max-width: 700px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
 
+  const scrollPercentage = useScrollPercentage();
+
   return (
-    <Flex
-      className="welcome-container"
-      flexDirection="column"
-      //w="100%"
-      flexGrow="1"
-      align="center"
-    >
+    <Flex className="welcome-container" flexDirection="column" flexGrow="1" align="center">
       <Flex
         bg="#695bd3"
-        // w="100%"
         justify="center"
         align="center"
         flexDir="column"
@@ -50,6 +46,8 @@ export const WelcomePage = () => {
               rounded="md"
               boxShadow="sm"
               fallbackSrc={spinner}
+              transition={'0.35s'}
+              _hover={{ transform: 'rotate(-5deg) scale(1.06) translate(3px, -10px)' }}
             ></Image>
           )}
           <Flex flexDir="column" gap="1rem">
@@ -84,6 +82,8 @@ export const WelcomePage = () => {
               rounded="md"
               boxShadow="sm"
               fallbackSrc={spinner}
+              transition={'0.35s'}
+              _hover={{ transform: 'rotate(5deg) scale(1.06) translate(3px, -10px)' }}
             ></Image>
           )}
         </Flex>
@@ -108,6 +108,8 @@ export const WelcomePage = () => {
               rounded="md"
               boxShadow="sm"
               fallbackSrc={spinner}
+              transition={'0.35s'}
+              _hover={{ transform: 'rotate(-5deg) scale(1.06) translate(3px, -10px)' }}
             ></Image>
           )}
           <Flex flexDir="column" gap="1rem">
@@ -133,18 +135,20 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Text fontSize="6xl" color="white">
-          Information about the project
-        </Text>
-        <Text fontSize="xl" align="justify" color="white">
-          GraphiQL is an integrated development environment (IDE) that is primarily used for
-          querying APIs that are built using GraphQL. It is built using the React JavaScript library
-          and allows developers to interactively explore and test their GraphQL APIs by writing and
-          executing queries, viewing query results, and analyzing the underlying schema. GraphiQL
-          for React provides a range of features designed to simplify the process of working with
-          GraphQL APIs, making it an indispensable tool for developers building GraphQL-based
-          applications.
-        </Text>
+        <Fade in={scrollPercentage > 66}>
+          <Text fontSize="6xl" color="white">
+            Information about the project
+          </Text>
+          <Text fontSize="xl" align="justify" color="white">
+            GraphiQL is an integrated development environment (IDE) that is primarily used for
+            querying APIs that are built using GraphQL. It is built using the React JavaScript
+            library and allows developers to interactively explore and test their GraphQL APIs by
+            writing and executing queries, viewing query results, and analyzing the underlying
+            schema. GraphiQL for React provides a range of features designed to simplify the process
+            of working with GraphQL APIs, making it an indispensable tool for developers building
+            GraphQL-based applications.
+          </Text>
+        </Fade>
       </Flex>
       <Flex
         w="100%"
@@ -155,16 +159,20 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Text fontSize="6xl">Information about the course</Text>
-        <Text fontSize="xl" align="justify">
-          The Rolling Scopes School offers a comprehensive course on React, covering topics such as
-          JSX, class and functional components, virtual DOM, React hooks, Redux, and more. The
-          course provides a strong foundation in React and web development, with hands-on projects
-          and real-world scenarios designed to help students build practical skills. With
-          experienced instructors and a supportive community, the Rolling Scopes React course is an
-          excellent starting point for anyone looking to learn this popular JavaScript library.
-        </Text>
-        <Image src={sloth} alt="RS School Sloth" w="250px" h="auto" fallbackSrc={spinner}></Image>
+        <Fade in={scrollPercentage > 83}>
+          <Text fontSize="6xl">Information about the course</Text>
+          <Text fontSize="xl" align="justify">
+            The Rolling Scopes School offers a comprehensive course on React, covering topics such
+            as JSX, class and functional components, virtual DOM, React hooks, Redux, and more. The
+            course provides a strong foundation in React and web development, with hands-on projects
+            and real-world scenarios designed to help students build practical skills. With
+            experienced instructors and a supportive community, the Rolling Scopes React course is
+            an excellent starting point for anyone looking to learn this popular JavaScript library.
+          </Text>
+        </Fade>
+        <Fade in={scrollPercentage > 97}>
+          <Image src={sloth} alt="RS School Sloth" w="250px" h="auto" fallbackSrc={spinner}></Image>
+        </Fade>
       </Flex>
     </Flex>
   );
