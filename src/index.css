@@ -4,7 +4,7 @@
   box-sizing: border-box;
   height: auto;
 
-  width: 100vw;
+  /* width: 100vw; */
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -25,7 +25,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  width: 100vw;
+  /* width: 100vw; */
   min-width: 320px;
   height: auto;
   min-height: 100vh;

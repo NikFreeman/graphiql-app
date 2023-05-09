@@ -14,13 +14,13 @@ export const WelcomePage = () => {
     <Flex
       className="welcome-container"
       flexDirection="column"
-      w="100vw"
+      //w="100%"
       flexGrow="1"
       align="center"
     >
       <Flex
         bg="#695bd3"
-        w="100%"
+        // w="100%"
         justify="center"
         align="center"
         flexDir="column"

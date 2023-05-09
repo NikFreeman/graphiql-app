@@ -29,6 +29,8 @@ export const Header = () => {
     setHeaderSticky(isAuthorized ? true : false);
   };
 
+  if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
+
   return (
     <>
       <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
