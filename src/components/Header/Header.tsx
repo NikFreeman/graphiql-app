@@ -21,7 +21,7 @@ export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
   //const [isHeaderSticky, setHeaderSticky] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
   const { onToggle } = useDisclosure();
 
@@ -42,7 +42,15 @@ export const Header = () => {
         <Grid
           as="header"
           bg="black"
-          h="100px"
+          h={
+            isSmallerThan800
+              ? scrollPercentage > 37
+                ? '115px'
+                : '100px'
+              : scrollPercentage > 47
+              ? '115px'
+              : '100px'
+          }
           minH="100px"
           p="1rem"
           color="white"
@@ -51,10 +59,13 @@ export const Header = () => {
           className="header-container"
           transition="0.3s"
           style={{
-            boxShadow:
-              scrollPercentage > 50
+            boxShadow: isSmallerThan800
+              ? scrollPercentage > 37
                 ? '0px -15px 24px -2px rgba(255, 255, 255, 0.35) inset'
-                : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset',
+                : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset'
+              : scrollPercentage > 47
+              ? '0px -15px 24px -2px rgba(255, 255, 255, 0.35) inset'
+              : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset',
           }}
         >
           {!isSmallerThan600 && (
