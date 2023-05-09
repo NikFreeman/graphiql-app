@@ -19,7 +19,6 @@ import { useScrollPercentage } from '../../hooks/scrollPercentage';
 
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
-  //const [isHeaderSticky, setHeaderSticky] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');

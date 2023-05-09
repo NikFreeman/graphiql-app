@@ -15,7 +15,5 @@ export const useScrollPercentage = () => {
     updateScrollPercentage();
   }, []);
 
-  console.log(scrollPercentage);
-
   return scrollPercentage;
 };
