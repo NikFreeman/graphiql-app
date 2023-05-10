@@ -21,7 +21,7 @@ function SignUp() {
       })
       .catch(console.error);
   };
-  return <LoginForm handleClick={handleSignUp}></LoginForm>;
+  return <LoginForm handleClick={handleSignUp} title="Sign Up" btnTitle="Sign Up"></LoginForm>;
 }
 
 export default SignUp;

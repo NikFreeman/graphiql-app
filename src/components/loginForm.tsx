@@ -13,12 +13,15 @@ import {
 } from '@chakra-ui/react';
 
 interface LoginFormProps {
+  title: string;
+  btnTitle: string;
   handleClick: (email: string, pass: string) => void;
 }
 
 function LoginForm(props: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+
   return (
     <Flex
       minH={'100vh'}
@@ -28,7 +31,7 @@ function LoginForm(props: LoginFormProps) {
     >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign </Heading>
+          <Heading fontSize={'4xl'}>{props.title} </Heading>
           <Text fontSize={'lg'} color={'gray.600'}></Text>
         </Stack>
         <Box rounded={'lg'} bg={colorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
@@ -55,7 +58,7 @@ function LoginForm(props: LoginFormProps) {
                 }}
                 onClick={() => props.handleClick(email, pass)}
               >
-                Sign Up
+                {props.btnTitle}
               </Button>
             </Stack>
           </Stack>

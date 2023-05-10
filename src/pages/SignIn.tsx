@@ -20,7 +20,7 @@ function SignIn() {
       })
       .catch((error) => console.log('error=>', error));
   };
-  return <LoginForm handleClick={handleSignIn}></LoginForm>;
+  return <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>;
 }
 
 export default SignIn;
