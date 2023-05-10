@@ -16,6 +16,7 @@ export const WelcomePage = () => {
   return (
     <Flex className="welcome-container" flexDirection="column" flexGrow="1" align="center">
       <Flex
+        as={'section'}
         bg="#695bd3"
         justify="center"
         align="center"
@@ -26,6 +27,7 @@ export const WelcomePage = () => {
       >
         <Text fontSize="6xl">Developers</Text>
         <Flex
+          as={'article'}
           gap="3vw"
           p="1rem"
           border="2px"
@@ -61,7 +63,7 @@ export const WelcomePage = () => {
             </Text>
           </Flex>
         </Flex>
-        <Flex gap="3vw" p="1rem">
+        <Flex as={'article'} gap="3vw" p="1rem" >
           <Flex flexDir="column" gap="1rem">
             <Text fontSize="4xl">Bonus156</Text>
             <Text fontSize="xl" align="justify">
@@ -88,6 +90,7 @@ export const WelcomePage = () => {
           )}
         </Flex>
         <Flex
+          as={'article'}
           gap="3vw"
           p="1rem"
           border="2px"
@@ -126,6 +129,7 @@ export const WelcomePage = () => {
         </Flex>
       </Flex>
       <Flex
+        as={'section'}
         bg="black"
         w="100%"
         justify="center"
@@ -151,6 +155,7 @@ export const WelcomePage = () => {
         </Fade>
       </Flex>
       <Flex
+        as={'section'}
         w="100%"
         justify="center"
         align="center"
