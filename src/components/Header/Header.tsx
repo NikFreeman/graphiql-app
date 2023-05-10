@@ -10,12 +10,14 @@ import {
   IconButton,
   Collapse,
   useDisclosure,
+  Fade,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { LinkButton } from '../Buttons/LinkButton';
 import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
 import { useScrollPixels } from '../../hooks/scrollPixels';
+import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
 
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
@@ -36,6 +38,9 @@ export const Header = () => {
 
   return (
     <>
+      <Fade in={scrollPixels > 300}>
+        <ScrollTopButton />
+      </Fade>
       <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
         <Text fontSize={isSmallerThan600 ? '2xl' : '6xl'}>GraphiQL by Musical Trio</Text>
       </Flex>
