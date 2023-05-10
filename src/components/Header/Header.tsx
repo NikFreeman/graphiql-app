@@ -15,17 +15,18 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { LinkButton } from '../Buttons/LinkButton';
 import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
-import { useScrollPercentage } from '../../hooks/scrollPercentage';
+import { useScrollPixels } from '../../hooks/scrollPixels';
 
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
-  const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
   const { onToggle } = useDisclosure();
 
-  const scrollPercentage = useScrollPercentage();
+  const headerHeight = 150;
+
+  const scrollPixels = useScrollPixels();
 
   const dummyAuthorization = () => {
     isAuthorized ? setAuthorization(false) : setAuthorization(true);
@@ -40,15 +41,7 @@ export const Header = () => {
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
-          h={
-            isSmallerThan800
-              ? scrollPercentage > 37
-                ? '115px'
-                : '100px'
-              : scrollPercentage > 47
-              ? '115px'
-              : '100px'
-          }
+          h={scrollPixels > headerHeight ? '115px' : '100px'}
           minH="100px"
           py="1rem"
           px={isSmallerThan900 ? '5vw' : '15vw'}
@@ -58,13 +51,10 @@ export const Header = () => {
           className="header-container"
           transition="0.3s"
           style={{
-            boxShadow: isSmallerThan800
-              ? scrollPercentage > 37
+            boxShadow:
+              scrollPixels > headerHeight
                 ? '0px -15px 24px -2px rgba(255, 255, 255, 0.35) inset'
-                : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset'
-              : scrollPercentage > 47
-              ? '0px -15px 24px -2px rgba(255, 255, 255, 0.35) inset'
-              : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset',
+                : '0px -15px 9px -6px rgba(255, 255, 255, 0) inset',
           }}
         >
           {!isSmallerThan600 && (
