@@ -20,6 +20,7 @@ import { useScrollPercentage } from '../../hooks/scrollPercentage';
 export const Header = () => {
   const [isAuthorized, setAuthorization] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
   const { onToggle } = useDisclosure();
@@ -37,10 +38,8 @@ export const Header = () => {
       <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
         <Text fontSize={isSmallerThan600 ? '2xl' : '6xl'}>GraphiQL by Musical Trio</Text>
       </Flex>
-      <Flex flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
+      <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
-          as="header"
-          bg="black"
           h={
             isSmallerThan800
               ? scrollPercentage > 37
@@ -51,7 +50,8 @@ export const Header = () => {
               : '100px'
           }
           minH="100px"
-          p="1rem"
+          py="1rem"
+          px={isSmallerThan900 ? '5vw' : '15vw'}
           color="white"
           templateColumns={isSmallerThan600 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'}
           gap={5}
@@ -69,7 +69,7 @@ export const Header = () => {
         >
           {!isSmallerThan600 && (
             <>
-              <GridItem>
+              <GridItem justifySelf={'start'}>
                 <ButtonGroup variant="ghost">
                   <LinkButton label="GraphiQL" source="https://www.npmjs.com/package/graphiql" />
                 </ButtonGroup>
@@ -79,7 +79,7 @@ export const Header = () => {
                   Welcome!
                 </Text>
               </GridItem>
-              <GridItem>
+              <GridItem justifySelf={'end'}>
                 <ButtonGroup variant="ghost">
                   <ToggleButton label="ENG" hasBorder={false} />
                   {!isAuthorized && (
