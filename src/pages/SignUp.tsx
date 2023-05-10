@@ -1,0 +1,27 @@
+import { auth } from '../utils/firebase';
+import { useDispatch } from 'react-redux';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setUser } from '../store/slices/userSlice';
+import LoginForm from '../components/loginForm';
+
+function SignUp() {
+  const dispatch = useDispatch();
+  console.log('auth->', auth.currentUser);
+  const handleSignUp = (email: string, password: string) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        console.log('user->', user);
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            token: user.refreshToken,
+          })
+        );
+      })
+      .catch(console.error);
+  };
+  return <LoginForm handleClick={handleSignUp} title="Sign Up" btnTitle="Sign Up"></LoginForm>;
+}
+
+export default SignUp;
