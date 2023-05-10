@@ -6,10 +6,11 @@ import LoginForm from '../components/loginForm';
 
 function SignUp() {
   const dispatch = useDispatch();
+  console.log('auth->', auth.currentUser);
   const handleSignUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        console.log(user);
+        console.log('user->', user);
         dispatch(
           setUser({
             email: user.email,
@@ -20,7 +21,7 @@ function SignUp() {
       })
       .catch(console.error);
   };
-  return <LoginForm handleClick={handleSignUp}></LoginForm>;
+  return <LoginForm handleClick={handleSignUp} title="Sign Up" btnTitle="Sign Up"></LoginForm>;
 }
 
 export default SignUp;
