@@ -1,16 +1,20 @@
 #root {
-  /* width: 100vw; */
+  width: 100vw;
+  min-height: 100vh;
   height: auto;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
 }
+
 .card {
   flex-grow: 1;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 

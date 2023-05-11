@@ -63,7 +63,7 @@ export const WelcomePage = () => {
             </Text>
           </Flex>
         </Flex>
-        <Flex as={'article'} gap="3vw" p="1rem" >
+        <Flex as={'article'} gap="3vw" p="1rem">
           <Flex flexDir="column" gap="1rem">
             <Text fontSize="4xl">Bonus156</Text>
             <Text fontSize="xl" align="justify">

@@ -66,7 +66,7 @@ export const Header = () => {
             <>
               <GridItem justifySelf={'start'}>
                 <ButtonGroup variant="ghost">
-                  <LinkButton label="GraphiQL" source="https://www.npmjs.com/package/graphiql" />
+                  <LinkButton label="GraphiQL" source="/" />
                 </ButtonGroup>
               </GridItem>
               <GridItem>
@@ -80,9 +80,9 @@ export const Header = () => {
                   {!isAuthorized && (
                     <SlideFade in={!isAuthorized}>
                       <ButtonGroup variant="ghost">
-                        <ToggleButton
+                        <LinkButton
                           label="Sign In"
-                          hasBorder={true}
+                          source="/sign-in"
                           handler={dummyAuthorization}
                         />
                         <ToggleButton label="Sign Up" hasBorder={true} />
@@ -92,7 +92,7 @@ export const Header = () => {
                   {isAuthorized && (
                     <SlideFade in={isAuthorized}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="#" />
+                        <LinkButton label="Go to Main Page" source="/" />
                         <ToggleButton
                           label="Sign Out"
                           hasBorder={true}
@@ -143,7 +143,12 @@ export const Header = () => {
               {!isAuthorized && (
                 <SlideFade in={!isAuthorized}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <ToggleButton hasBorder={true} label="Sign In" handler={dummyAuthorization} />
+                    <LinkButton
+                      label="Sign In"
+                      source="/sign-in"
+                      handler={dummyAuthorization}
+                      width="100%"
+                    />
                     <ToggleButton hasBorder={true} label="Sign Up" />
                   </Flex>
                 </SlideFade>
@@ -151,7 +156,7 @@ export const Header = () => {
               {isAuthorized && (
                 <SlideFade in={isAuthorized}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label="Go to Main Page" source="#" width="100%" />
+                    <LinkButton label="Go to Main Page" source="/" width="100%" />
                     <ToggleButton hasBorder={true} label="Sign Out" handler={dummyAuthorization} />
                   </Flex>
                 </SlideFade>

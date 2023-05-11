@@ -4,6 +4,7 @@ import { Link } from '@chakra-ui/react';
 interface ButtonProps {
   label: string;
   source: string;
+  color?: string;
   width?: string;
   handler?: MouseEventHandler;
 }
@@ -12,7 +13,7 @@ export const LinkButton = (props: ButtonProps) => {
   return (
     <Link
       href={props.source}
-      color="white"
+      color={props.color || 'white'}
       w={props.width}
       minW="80px"
       h={'40px'}
