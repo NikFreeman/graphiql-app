@@ -13,9 +13,19 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Box,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Input,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
+import { Schema } from './schema';
 // import { useAppDispatch } from '../store/hooks';
 // import { setQuery } from '../store/slices/requestSlice';
 
@@ -23,6 +33,7 @@ export function EditorArea() {
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
   const [variables, setVariables] = useState({});
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // const dispatch = useAppDispatch();
   const onSubmit = async () => {
     const resp = await makeRequest(request, variables);
@@ -30,15 +41,15 @@ export function EditorArea() {
   };
 
   return (
-    <Grid gridTemplateColumns={'1fr 50px 1fr'} gap={2}>
+    <Grid gridTemplateColumns={'1fr 70px 1fr'} flexGrow={1}>
       <GridItem
         display={'flex'}
         flexDir={'column'}
         rowSpan={1}
         colSpan={1}
-        minHeight={'70vh'}
         height={'100%'}
         gap={2}
+        px={2}
       >
         <Textarea height={'100%'} onChange={(e) => setRequest(e.target.value)} />
         <Accordion allowToggle>
@@ -66,11 +77,28 @@ export function EditorArea() {
         </Accordion>
       </GridItem>
       <GridItem colStart={2} colEnd={3}>
-        <Button colorScheme="pink" onClick={onSubmit}>
-          ⯈
-        </Button>
+        <Box>
+          <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
+            ⯈
+          </Button>
+          <Button my={2} colorScheme={'purple'} onClick={onOpen}>
+            🗎
+          </Button>
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Docs</DrawerHeader>
+
+              <DrawerBody>
+                <Input placeholder="Type here..." />
+                <Schema />
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </Box>
       </GridItem>
-      <GridItem rowStart={1} colStart={3} colEnd={4} rowSpan={1}>
+      <GridItem rowStart={1} colStart={3} colEnd={4} rowSpan={1} px={2}>
         <Textarea readOnly height={'100%'} value={response} />
       </GridItem>
     </Grid>
