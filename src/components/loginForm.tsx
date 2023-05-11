@@ -6,11 +6,11 @@ import {
   FormLabel,
   Input,
   Stack,
-  Button,
   Heading,
   Text,
   useColorModeValue as colorModeValue,
 } from '@chakra-ui/react';
+import { ToggleButton } from '../components/Buttons/ToggleButton';
 
 interface LoginFormProps {
   title: string;
@@ -24,7 +24,8 @@ function LoginForm(props: LoginFormProps) {
 
   return (
     <Flex
-      minH={'100vh'}
+      minH={'100%'}
+      flexGrow={'1'}
       align={'center'}
       justify={'center'}
       bg={colorModeValue('gray.50', 'gray.800')}
@@ -50,16 +51,12 @@ function LoginForm(props: LoginFormProps) {
                 align={'start'}
                 justify={'space-between'}
               ></Stack>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                onClick={() => props.handleClick(email, pass)}
-              >
-                {props.btnTitle}
-              </Button>
+              <ToggleButton
+                color="black"
+                hasBorder={true}
+                label={props.btnTitle}
+                handler={() => props.handleClick(email, pass)}
+              />
             </Stack>
           </Stack>
         </Box>
