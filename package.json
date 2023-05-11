@@ -12,9 +12,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.6.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
+    "@fontsource/oswald": "^4.5.12",
     "@reduxjs/toolkit": "^1.9.5",
     "firebase": "^9.21.0",
     "framer-motion": "^10.12.5",
