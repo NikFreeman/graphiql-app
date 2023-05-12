@@ -8,39 +8,39 @@ import {
 } from '@chakra-ui/react';
 import { makeRequest } from '../utils/request';
 
-interface Arg {
+type Arg = {
   name: string;
   description: string;
   type: Type;
   defaultValue: null;
-}
+};
 
-interface Field {
+type Field = {
   name: string;
   description: string;
   args: Arg[];
   type: Type;
-}
+};
 
-interface Type {
+type Type = {
   kind: 'OBJECT' | 'LIST' | 'NON_NULL' | 'SCALAR' | 'ENUM';
   name: string;
   description?: string;
   fields?: Field[];
   ofType?: Type | null;
-}
+};
 
-interface Directive {
+type Directive = {
   name: string;
   description: string;
   locations: string[];
   args: Arg[];
-}
+};
 
-interface Schema {
+type Schema = {
   types: Type[];
   directives: Directive[];
-}
+};
 
 const query =
   '\n query IntrospectionQuery {\n __schema {\n \n queryType { name }\n mutationType { name }\n subscriptionType { name }\n types {\n ...FullType\n }\n directives {\n name\n description\n \n locations\n args {\n ...InputValue\n }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      \n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n      \n      \n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n kind\n name\n ofType {\n kind\n name\n ofType {\n kind\n name\n }\n }\n }\n }\n }\n }\n }\n }\n';
@@ -111,7 +111,12 @@ export function Schema() {
                   <AccordionPanel pb={4}>
                     {getTypes(field)}
                     <h3>Type details</h3>
-                    {DrowSchemaTree(field)}
+                    <DrawSchemaTree
+                      field={field}
+                      schema={schema}
+                      getTypeName={() => getTypeName(field)}
+                      getTypes={() => getTypes(field)}
+                    />
                   </AccordionPanel>
                 </AccordionItem>
               );
@@ -123,7 +128,14 @@ export function Schema() {
   );
 }
 
-function DrowSchemaTree(field: Field) {
+interface DrawTreeProps {
+  field: Field;
+  schema: Schema;
+  getTypeName: (field: Field) => string;
+  getTypes: (field: Field) => string;
+}
+
+function DrawSchemaTree({ field }: DrawTreeProps) {
   const fieldTypeName = getTypeName(field);
   const type = schema.types.find((type) => type.name === fieldTypeName);
   if (type) {
@@ -132,25 +144,37 @@ function DrowSchemaTree(field: Field) {
         {type.fields?.map((field) => {
           return (
             <AccordionItem key={field.name}>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
-                    {field.name}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-                <Box as="span" flex="1" textAlign="left" fontSize="sm">
-                  {field.description}
-                </Box>
-              </h2>
-              <AccordionPanel pb={4}>
-                {getTypes(field)}
-                <h4>Type details</h4>
-              </AccordionPanel>
+              {({ isExpanded }) => (
+                <>
+                  <h2>
+                    <AccordionButton>
+                      <Box as="span" flex="1" textAlign="left">
+                        {field.name}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                    <Box as="span" flex="1" textAlign="left" fontSize="sm">
+                      {field.description}
+                    </Box>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    {getTypes(field)}
+                    <h4>Type details</h4>
+                    {isExpanded && (
+                      <DrawSchemaTree
+                        field={field}
+                        schema={schema}
+                        getTypeName={() => getTypeName(field)}
+                        getTypes={() => getTypes(field)}
+                      />
+                    )}
+                  </AccordionPanel>
+                </>
+              )}
             </AccordionItem>
           );
         })}
       </Accordion>
     );
-  }
+  } else return <></>;
 }
