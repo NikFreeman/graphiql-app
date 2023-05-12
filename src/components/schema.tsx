@@ -93,35 +93,7 @@ export function Schema() {
           </Box>
         </h2>
         <AccordionPanel pb={4}>
-          <Accordion allowToggle>
-            {schema.types[0].fields?.map((field) => {
-              return (
-                <AccordionItem key={field.name}>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        {field.name}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <Box as="span" flex="1" textAlign="left" fontSize="sm">
-                      {field.description}
-                    </Box>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    {getTypes(field)}
-                    <h3>Type details</h3>
-                    <DrawSchemaTree
-                      field={field}
-                      schema={schema}
-                      getTypeName={() => getTypeName(field)}
-                      getTypes={() => getTypes(field)}
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
+          <SchemaTree typeName={schema.types[0].name} />
         </AccordionPanel>
       </AccordionItem>
     </Accordion>
@@ -129,14 +101,12 @@ export function Schema() {
 }
 
 interface DrawTreeProps {
-  field: Field;
-  schema: Schema;
-  getTypeName: (field: Field) => string;
-  getTypes: (field: Field) => string;
+  field?: Field;
+  typeName?: string;
 }
 
-function DrawSchemaTree({ field }: DrawTreeProps) {
-  const fieldTypeName = getTypeName(field);
+function SchemaTree({ field, typeName }: DrawTreeProps) {
+  const fieldTypeName = typeName ? typeName : field && getTypeName(field);
   const type = schema.types.find((type) => type.name === fieldTypeName);
   if (type) {
     return (
@@ -160,14 +130,7 @@ function DrawSchemaTree({ field }: DrawTreeProps) {
                   <AccordionPanel pb={4}>
                     {getTypes(field)}
                     <h4>Type details</h4>
-                    {isExpanded && (
-                      <DrawSchemaTree
-                        field={field}
-                        schema={schema}
-                        getTypeName={() => getTypeName(field)}
-                        getTypes={() => getTypes(field)}
-                      />
-                    )}
+                    {isExpanded && <SchemaTree field={field} />}
                   </AccordionPanel>
                 </>
               )}
