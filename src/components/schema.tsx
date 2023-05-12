@@ -72,7 +72,9 @@ function getTypes(field: Field): string {
         : (arg.type.ofType.ofType?.ofType?.name ||
             arg.type.ofType.ofType?.name ||
             arg.type.ofType.name) + '! ')
-  )}${field.args.length ? '): ' : ': '}${getTypeName(field)}`;
+  )}${field.args.length ? '): ' : ': '}${field.type.kind === 'LIST' ? '[' : ''}${getTypeName(
+    field
+  )}${field.type.kind === 'LIST' ? ']' : ''}`;
 }
 
 export function Schema() {
