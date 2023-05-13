@@ -141,7 +141,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                         <h3>Arguments</h3>
                         <Accordion allowToggle>
                           {field.args.map((arg) => {
-                            const argTypeName = getArgTypeName(arg).trim().endsWith('!')
+                            const argTypeName: string = getArgTypeName(arg).trim().endsWith('!')
                               ? getArgTypeName(arg).trim().slice(0, -1)
                               : getArgTypeName(arg).trim();
                             const typeForArg = schema.types.find(
@@ -164,6 +164,38 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                         <Box as="span" flex="1" textAlign="left">
                                           {typeForArg?.description}
                                         </Box>
+                                      )}
+                                      {isExpanded && typeForArg?.kind === 'INPUT_OBJECT' && (
+                                        <Accordion allowToggle>
+                                          <h3>Type details</h3>
+                                          {typeForArg.inputFields?.map((inputField) => {
+                                            return (
+                                              <AccordionItem key={inputField.name}>
+                                                {({ isExpanded }) => (
+                                                  <>
+                                                    <AccordionButton>
+                                                      <Box as="span" flex="1" textAlign="left">
+                                                        {inputField.name +
+                                                          ': ' +
+                                                          getArgTypeName(inputField)}
+                                                      </Box>
+                                                      <AccordionIcon />
+                                                    </AccordionButton>
+                                                    <AccordionPanel>
+                                                      {isExpanded && (
+                                                        <SchemaTree
+                                                          typeName={getArgTypeName(
+                                                            inputField
+                                                          ).trim()}
+                                                        />
+                                                      )}
+                                                    </AccordionPanel>
+                                                  </>
+                                                )}
+                                              </AccordionItem>
+                                            );
+                                          })}
+                                        </Accordion>
                                       )}
                                     </AccordionPanel>
                                   </>
