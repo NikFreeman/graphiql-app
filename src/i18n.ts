@@ -6,6 +6,7 @@ const resources = {
   en: {
     translation: {
       lang: 'ENG',
+      selectedLang: 'Selected Language: ENG',
       graphiqlBy: 'GraphiQL by Musical Trio',
       welcome: 'Welcome!',
       signIn: 'Sign In',
@@ -17,6 +18,7 @@ const resources = {
   ru: {
     translation: {
       lang: 'РУС',
+      selectedLang: 'Язык: русский',
       graphiqlBy: 'GraphiQL от команды Musical Trio',
       welcome: 'Приветствуем!',
       signIn: 'Войти',

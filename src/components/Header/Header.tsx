@@ -44,7 +44,7 @@ export const Header = () => {
         <ScrollTopButton />
       </Fade>
       <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
-        <Text fontSize={isSmallerThan600 ? '2xl' : '6xl'}>{t('graphiqlBy')}</Text>
+        <Text fontSize={isSmallerThan900 ? '2xl' : '6xl'}>{t('graphiqlBy')}</Text>
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
@@ -145,7 +145,11 @@ export const Header = () => {
               p={'2rem'}
               flexDir={'column'}
             >
-              <ToggleButton label="Selected Language: ENG" hasBorder={true} />
+              <ToggleButton
+                label={t('selectedLang')}
+                hasBorder={true}
+                handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
+              />
               {!isAuthorized && (
                 <SlideFade in={!isAuthorized}>
                   <Flex flexDir={'column'} gap={'1rem'}>
