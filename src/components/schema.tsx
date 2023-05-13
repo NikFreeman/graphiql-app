@@ -23,10 +23,11 @@ type Field = {
 };
 
 type Type = {
-  kind: 'OBJECT' | 'LIST' | 'NON_NULL' | 'SCALAR' | 'ENUM';
+  kind: 'OBJECT' | 'LIST' | 'NON_NULL' | 'SCALAR' | 'ENUM' | 'INPUT_OBJECT';
   name: string;
   description?: string;
-  fields?: Field[];
+  fields?: Field[] | null;
+  inputFields?: Arg[] | null;
   ofType?: Type | null;
 };
 
@@ -61,17 +62,19 @@ function getTypeName(field: Field): string {
   );
 }
 
+function getArgTypeName(arg: Arg): string {
+  return `${
+    !arg.type.ofType
+      ? ' ' + arg.type.name
+      : (arg.type.ofType.ofType?.ofType?.name ||
+          arg.type.ofType.ofType?.name ||
+          arg.type.ofType.name) + '! '
+  }`;
+}
+
 function getTypes(field: Field): string {
   return `${field.name}${field.args.length ? '(' : ''}${field.args.map(
-    (arg) =>
-      ' ' +
-      arg.name +
-      ': ' +
-      (!arg.type.ofType
-        ? ' ' + arg.type.name
-        : (arg.type.ofType.ofType?.ofType?.name ||
-            arg.type.ofType.ofType?.name ||
-            arg.type.ofType.name) + '! ')
+    (arg) => ' ' + arg.name + ': ' + getArgTypeName(arg)
   )}${field.args.length ? '): ' : ': '}${field.type.kind === 'LIST' ? '[' : ''}${getTypeName(
     field
   )}${field.type.kind === 'LIST' ? ']' : ''}`;
@@ -129,8 +132,48 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                   </h2>
                   <AccordionPanel pb={4}>
                     {getTypes(field)}
-                    <h4>Type details</h4>
-                    {isExpanded && <SchemaTree field={field} />}
+                    <Box mt={8}>
+                      <h3>Type details</h3>
+                      {isExpanded && <SchemaTree field={field} />}
+                    </Box>
+                    {!!field.args.length && (
+                      <Box mt={8}>
+                        <h3>Arguments</h3>
+                        <Accordion allowToggle>
+                          {field.args.map((arg) => {
+                            const argTypeName = getArgTypeName(arg).trim().endsWith('!')
+                              ? getArgTypeName(arg).trim().slice(0, -1)
+                              : getArgTypeName(arg).trim();
+                            const typeForArg = schema.types.find(
+                              (argType) => argType.name === argTypeName
+                            );
+                            return (
+                              <AccordionItem key={arg.name}>
+                                {({ isExpanded }) => (
+                                  <>
+                                    <h2>
+                                      <AccordionButton>
+                                        <Box as="span" flex="1" textAlign="left">
+                                          {arg.name + ': ' + getArgTypeName(arg)}
+                                        </Box>
+                                        <AccordionIcon />
+                                      </AccordionButton>
+                                    </h2>
+                                    <AccordionPanel pb={4}>
+                                      {isExpanded && typeForArg?.kind === 'SCALAR' && (
+                                        <Box as="span" flex="1" textAlign="left">
+                                          {typeForArg?.description}
+                                        </Box>
+                                      )}
+                                    </AccordionPanel>
+                                  </>
+                                )}
+                              </AccordionItem>
+                            );
+                          })}
+                        </Accordion>
+                      </Box>
+                    )}
                   </AccordionPanel>
                 </>
               )}
