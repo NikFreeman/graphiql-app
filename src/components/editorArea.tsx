@@ -86,7 +86,7 @@ export function EditorArea() {
           </Button>
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent maxW={'lg'}>
               <DrawerCloseButton />
               <DrawerHeader>Docs</DrawerHeader>
 

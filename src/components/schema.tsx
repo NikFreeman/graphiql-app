@@ -108,10 +108,10 @@ interface DrawTreeProps {
 function SchemaTree({ field, typeName }: DrawTreeProps) {
   const fieldTypeName = typeName ? typeName : field && getTypeName(field);
   const type = schema.types.find((type) => type.name === fieldTypeName);
-  if (type) {
+  if (type && type.fields) {
     return (
       <Accordion allowToggle>
-        {type.fields?.map((field) => {
+        {type.fields.map((field) => {
           return (
             <AccordionItem key={field.name}>
               {({ isExpanded }) => (
@@ -139,5 +139,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
         })}
       </Accordion>
     );
+  } else if (type?.kind === 'SCALAR') {
+    return <div>{type.description}</div>;
   } else return <></>;
 }
