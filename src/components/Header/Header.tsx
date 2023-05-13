@@ -91,7 +91,11 @@ export const Header = () => {
                           source="/sign-in"
                           handler={dummyAuthorization}
                         />
-                        <ToggleButton label={t('signUp')} hasBorder={true} />
+                        <LinkButton
+                          label={t('signUp')}
+                          source="/sign-up"
+                          handler={dummyAuthorization}
+                        />
                       </ButtonGroup>
                     </SlideFade>
                   )}
@@ -159,7 +163,12 @@ export const Header = () => {
                       handler={dummyAuthorization}
                       width="100%"
                     />
-                    <ToggleButton hasBorder={true} label={t('signUp')} />
+                    <LinkButton
+                      label={t('signUp')}
+                      source="/sign-up"
+                      handler={dummyAuthorization}
+                      width="100%"
+                    />
                   </Flex>
                 </SlideFade>
               )}

@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '../store/slices/userSlice';
 import LoginForm from '../components/loginForm';
+import { useTranslation } from 'react-i18next';
 
 function SignUp() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   console.log('auth->', auth.currentUser);
   const handleSignUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -21,7 +23,9 @@ function SignUp() {
       })
       .catch(console.error);
   };
-  return <LoginForm handleClick={handleSignUp} title="Sign Up" btnTitle="Sign Up"></LoginForm>;
+  return (
+    <LoginForm handleClick={handleSignUp} title={t('signUp')} btnTitle={t('signUp')}></LoginForm>
+  );
 }
 
 export default SignUp;

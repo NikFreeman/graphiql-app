@@ -13,6 +13,10 @@ const resources = {
       signUp: 'Sign Up',
       goToMain: 'Go to Main Page',
       signOut: 'Sign Out',
+      up: 'Up!',
+      email: 'Email address',
+      password: 'Password',
+      notFound: 'Not found',
       developers: 'Developers',
       nickInfo:
         'NikFreeman is a talented programmer who is passionate about creating innovative and efficient software solutions. With a keen eye for detail and a deep understanding of programming languages and frameworks, Nik brings a valuable skillset to any project. As a core member of the GraphiQL app development team, Nik is constantly working to ensure that the app is both user-friendly and high-performing.',
@@ -38,6 +42,10 @@ const resources = {
       signUp: 'Регистрация',
       goToMain: 'Вернуться на главную',
       signOut: 'Выйти',
+      up: 'Наверх!',
+      email: 'Электронный адрес',
+      password: 'Пароль',
+      notFound: 'Код ошибки: Страница не найдена',
       developers: 'Разработчики',
       nickInfo:
         'NikFreeman — талантливый программист, полностью поглощенный созданием инновационных и эффективных программных продуктов. Обладая беспрецедентным вниманием к деталям и глубоким пониманием языков программирования и сред разработки, NikFreeman своим набором навыков способен сделать любой проект лучше. Как ключевой член команды разработчиков GraphiQL, NikFreeman неустанно работает над тем, чтобы приложение было удобным и высокопроизводительным.',

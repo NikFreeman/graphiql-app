@@ -1,10 +1,11 @@
 import { Button } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 export const ScrollTopButton = () => {
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
+  const { t } = useTranslation();
   return (
     <Button
       colorScheme="blackAlpha"
@@ -22,7 +23,7 @@ export const ScrollTopButton = () => {
       bg={'#695bd3'}
       _hover={{ opacity: '0.85' }}
     >
-      To Top!
+      {t('up')}
     </Button>
   );
 };

@@ -11,6 +11,7 @@ import {
   useColorModeValue as colorModeValue,
 } from '@chakra-ui/react';
 import { ToggleButton } from '../components/Buttons/ToggleButton';
+import { useTranslation } from 'react-i18next';
 
 interface LoginFormProps {
   title: string;
@@ -21,6 +22,7 @@ interface LoginFormProps {
 function LoginForm(props: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -38,11 +40,11 @@ function LoginForm(props: LoginFormProps) {
         <Box rounded={'lg'} bg={colorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id="password">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('password')}</FormLabel>
               <Input type="password" value={pass} onChange={(e) => setPass(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
