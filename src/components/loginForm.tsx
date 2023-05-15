@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import {
   Flex,
-  Box,
   FormControl,
   FormLabel,
   Input,
   Stack,
   Heading,
   Text,
+  useMediaQuery,
   useColorModeValue as colorModeValue,
 } from '@chakra-ui/react';
 import { ToggleButton } from '../components/Buttons/ToggleButton';
@@ -23,6 +23,7 @@ function LoginForm(props: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const { t } = useTranslation();
+  const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
 
   return (
     <Flex
@@ -30,15 +31,30 @@ function LoginForm(props: LoginFormProps) {
       flexGrow={'1'}
       align={'center'}
       justify={'center'}
-      bg={colorModeValue('gray.50', 'gray.800')}
+      bg={colorModeValue('gray.50', 'gray.500')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack
+        spacing={8}
+        mx={'auto'}
+        maxW={'lg'}
+        py={12}
+        px={6}
+        w={isSmallerThan600 ? '90%' : '500px'}
+      >
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>{props.title} </Heading>
           <Text fontSize={'lg'} color={'gray.600'}></Text>
         </Stack>
-        <Box rounded={'lg'} bg={colorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
-          <Stack spacing={4}>
+        <Flex
+          bg={colorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}
+          borderBottomRightRadius="0.5rem"
+          borderBottomLeftRadius="0"
+          borderTopLeftRadius="1rem"
+          borderTopRightRadius="0"
+        >
+          <Stack spacing={4} w={'100%'}>
             <FormControl id="email">
               <FormLabel>{t('email')}</FormLabel>
               <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -61,7 +77,7 @@ function LoginForm(props: LoginFormProps) {
               />
             </Stack>
           </Stack>
-        </Box>
+        </Flex>
       </Stack>
     </Flex>
   );

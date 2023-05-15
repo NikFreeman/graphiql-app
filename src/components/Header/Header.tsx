@@ -28,7 +28,7 @@ export const Header = () => {
   const { t, i18n } = useTranslation();
   const { onToggle } = useDisclosure();
 
-  const headerHeight = 150;
+  const headerHeight = 140;
 
   const scrollPixels = useScrollPixels();
 
