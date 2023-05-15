@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import {
   Textarea,
   Grid,
@@ -21,17 +22,26 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Spinner,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
-import { Schema } from './schema';
+import { getSchema } from '../helpers/variables';
+
+const Schema = React.lazy(() => import('./schema'));
 
 export function EditorArea() {
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
   const [variables, setVariables] = useState({});
   const [headers, setHeaders] = useState({});
+  const [disabler, setDisabler] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onRequest = () => {
+    getSchema();
+    setDisabler(false);
+  };
 
   const onSubmit = async () => {
     const resp = await makeRequest(request, variables, headers);
@@ -79,7 +89,10 @@ export function EditorArea() {
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
             ⯈
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onOpen}>
+          <Button my={2} colorScheme={'purple'} onClick={onRequest} isDisabled={!disabler}>
+            SDL
+          </Button>
+          <Button my={2} colorScheme={'purple'} onClick={onOpen} isDisabled={disabler}>
             🗎
           </Button>
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -89,7 +102,19 @@ export function EditorArea() {
               <DrawerHeader>Docs</DrawerHeader>
 
               <DrawerBody>
-                <Schema />
+                <Suspense
+                  fallback={
+                    <Spinner
+                      thickness="4px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="green.300"
+                      size="xl"
+                    />
+                  }
+                >
+                  <Schema />
+                </Suspense>
               </DrawerBody>
             </DrawerContent>
           </Drawer>

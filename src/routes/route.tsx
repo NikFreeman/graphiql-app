@@ -6,7 +6,7 @@ import SignIn from '../pages/SignIn';
 import { WelcomePage } from '../pages/WelcomePage';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
-import ProtectedRoute from '../components/protectedRoute';
+// import ProtectedRoute from '../components/protectedRoute';
 
 function Router() {
   return (
@@ -17,9 +17,9 @@ function Router() {
         <Route
           path="editor"
           element={
-            <ProtectedRoute>
-              <Editor />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Editor />
+            // </ProtectedRoute>
           }
         />
         <Route path="sign-in" element={<SignIn />} />
