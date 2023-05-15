@@ -21,22 +21,20 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Input,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
 import { Schema } from './schema';
-// import { useAppDispatch } from '../store/hooks';
-// import { setQuery } from '../store/slices/requestSlice';
 
 export function EditorArea() {
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
   const [variables, setVariables] = useState({});
+  const [headers, setHeaders] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const dispatch = useAppDispatch();
+
   const onSubmit = async () => {
-    const resp = await makeRequest(request, variables);
+    const resp = await makeRequest(request, variables, headers);
     setResponse(JSON.stringify(resp, null, '\t'));
   };
 
@@ -68,7 +66,7 @@ export function EditorArea() {
                     <Textarea onChange={(e) => setVariables(JSON.parse(e.target.value))} />
                   </TabPanel>
                   <TabPanel p={0}>
-                    <Textarea />
+                    <Textarea onChange={(e) => setHeaders(JSON.parse(e.target.value))} />
                   </TabPanel>
                 </TabPanels>
               </AccordionPanel>
@@ -91,7 +89,6 @@ export function EditorArea() {
               <DrawerHeader>Docs</DrawerHeader>
 
               <DrawerBody>
-                <Input placeholder="Type here..." />
                 <Schema />
               </DrawerBody>
             </DrawerContent>

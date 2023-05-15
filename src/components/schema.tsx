@@ -85,7 +85,7 @@ export function Schema() {
     <Accordion allowToggle>
       <AccordionItem>
         <h2>
-          <AccordionButton onClick={() => console.log(schema)}>
+          <AccordionButton>
             <Box as="span" flex="1" textAlign="left">
               Query: {schema.types[0].name}
             </Box>
@@ -95,7 +95,7 @@ export function Schema() {
             {schema.types[0].description}
           </Box>
         </h2>
-        <AccordionPanel pb={4}>
+        <AccordionPanel pb={4} px={0}>
           <SchemaTree typeName={schema.types[0].name} />
         </AccordionPanel>
       </AccordionItem>
@@ -130,7 +130,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                       {field.description}
                     </Box>
                   </h2>
-                  <AccordionPanel pb={4}>
+                  <AccordionPanel pb={4} px={0}>
                     {getTypes(field)}
                     <Box mt={8}>
                       <h3>Type details</h3>
