@@ -19,9 +19,10 @@ import './Header.css';
 import { useScrollPixels } from '../../hooks/scrollPixels';
 import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Header = () => {
-  const [isAuthorized, setAuthorization] = useState(false);
+  // const [isAuthorized, setAuthorization] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
@@ -32,9 +33,11 @@ export const Header = () => {
 
   const scrollPixels = useScrollPixels();
 
-  const dummyAuthorization = () => {
-    isAuthorized ? setAuthorization(false) : setAuthorization(true);
-  };
+  const { isAuth } = useAuth();
+
+  // const dummyAuthorization = () => {
+  //   isAuthorized ? setAuthorization(false) : setAuthorization(true);
+  // };
 
   if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
 
@@ -83,30 +86,22 @@ export const Header = () => {
                     hasBorder={false}
                     handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
                   />
-                  {!isAuthorized && (
-                    <SlideFade in={!isAuthorized}>
+                  {!isAuth && (
+                    <SlideFade in={!isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton
-                          label={t('signIn')}
-                          source="/sign-in"
-                          handler={dummyAuthorization}
-                        />
-                        <LinkButton
-                          label={t('signUp')}
-                          source="/sign-up"
-                          handler={dummyAuthorization}
-                        />
+                        <LinkButton label={t('signIn')} source="/sign-in" />
+                        <LinkButton label={t('signUp')} source="/sign-up" />
                       </ButtonGroup>
                     </SlideFade>
                   )}
-                  {isAuthorized && (
-                    <SlideFade in={isAuthorized}>
+                  {isAuth && (
+                    <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
                         <LinkButton label="Go to Main Page" source="/" />
                         <ToggleButton
                           label={t('signOut')}
                           hasBorder={true}
-                          handler={dummyAuthorization}
+                          handler={() => console.log('Sign Out')}
                         />
                       </ButtonGroup>
                     </SlideFade>
@@ -154,32 +149,22 @@ export const Header = () => {
                 hasBorder={true}
                 handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
               />
-              {!isAuthorized && (
-                <SlideFade in={!isAuthorized}>
+              {!isAuth && (
+                <SlideFade in={!isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton
-                      label={t('signIn')}
-                      source="/sign-in"
-                      handler={dummyAuthorization}
-                      width="100%"
-                    />
-                    <LinkButton
-                      label={t('signUp')}
-                      source="/sign-up"
-                      handler={dummyAuthorization}
-                      width="100%"
-                    />
+                    <LinkButton label={t('signIn')} source="/sign-in" width="100%" />
+                    <LinkButton label={t('signUp')} source="/sign-up" width="100%" />
                   </Flex>
                 </SlideFade>
               )}
-              {isAuthorized && (
-                <SlideFade in={isAuthorized}>
+              {isAuth && (
+                <SlideFade in={isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
                     <LinkButton label={t('goToMain')} source="/" width="100%" />
                     <ToggleButton
                       hasBorder={true}
                       label={t('signOut')}
-                      handler={dummyAuthorization}
+                      handler={() => console.log('Sign Out')}
                     />
                   </Flex>
                 </SlideFade>
