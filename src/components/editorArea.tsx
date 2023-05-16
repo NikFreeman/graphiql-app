@@ -22,7 +22,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Spinner,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
@@ -35,13 +35,9 @@ export function EditorArea() {
   const [response, setResponse] = useState('');
   const [variables, setVariables] = useState({});
   const [headers, setHeaders] = useState({});
-  const [disabler, setDisabler] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const onRequest = () => {
-    getSchema();
-    setDisabler(false);
-  };
+  getSchema();
 
   const onSubmit = async () => {
     const resp = await makeRequest(request, variables, headers);
@@ -89,10 +85,7 @@ export function EditorArea() {
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
             ⯈
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onRequest} isDisabled={!disabler}>
-            SDL
-          </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onOpen} isDisabled={disabler}>
+          <Button my={2} colorScheme={'purple'} onClick={onOpen}>
             🗎
           </Button>
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -103,15 +96,7 @@ export function EditorArea() {
 
               <DrawerBody>
                 <Suspense
-                  fallback={
-                    <Spinner
-                      thickness="4px"
-                      speed="0.65s"
-                      emptyColor="gray.200"
-                      color="green.300"
-                      size="xl"
-                    />
-                  }
+                  fallback={<SkeletonText mt="4" noOfLines={12} spacing="4" skeletonHeight="3" />}
                 >
                   <Schema />
                 </Suspense>
@@ -121,7 +106,7 @@ export function EditorArea() {
         </Box>
       </GridItem>
       <GridItem rowStart={1} colStart={3} colEnd={4} rowSpan={1} px={2}>
-        <Textarea readOnly height={'100%'} value={response} />
+        <Textarea readOnly minHeight={'100%'} value={response} />
       </GridItem>
     </Grid>
   );

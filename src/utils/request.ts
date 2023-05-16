@@ -5,8 +5,8 @@ export async function makeRequest(query: string, variables: object, optionalHead
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
+      ...optionalHeaders,
     },
-    ...optionalHeaders,
     body: JSON.stringify({ query: query, variables: variables }),
   });
   return await res.json();
