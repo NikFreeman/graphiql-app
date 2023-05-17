@@ -23,7 +23,9 @@ import {
   DrawerHeader,
   DrawerOverlay,
   SkeletonText,
+  Icon,
 } from '@chakra-ui/react';
+import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
 import { getSchema } from '../helpers/variables';
@@ -35,6 +37,7 @@ export function EditorArea() {
   const [response, setResponse] = useState('');
   const [variables, setVariables] = useState({});
   const [headers, setHeaders] = useState({});
+  const [isShowExtraAreas, setIsShowExtraAreas] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   getSchema();
@@ -43,6 +46,8 @@ export function EditorArea() {
     const resp = await makeRequest(request, variables, headers);
     setResponse(JSON.stringify(resp, null, 4));
   };
+
+  const handleToggle = () => setIsShowExtraAreas(!isShowExtraAreas);
 
   return (
     <Grid gridTemplateColumns={'1fr 70px 1fr'} flexGrow={1}>
@@ -62,8 +67,8 @@ export function EditorArea() {
               <TabList pt={1}>
                 <Tab>Variables</Tab>
                 <Tab>Headers</Tab>
-                <AccordionButton flex="0.1" justifyContent="center">
-                  <AccordionIcon />
+                <AccordionButton flex="0.1" justifyContent="center" onClick={handleToggle}>
+                  <AccordionIcon transform={isShowExtraAreas ? 'rotate(0)' : 'rotate(-180deg)'} />
                 </AccordionButton>
               </TabList>
               <AccordionPanel px={0}>
@@ -91,10 +96,10 @@ export function EditorArea() {
       <GridItem colStart={2} colEnd={3}>
         <Box>
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
-            ⯈
+            <Icon as={HiPlay} />
           </Button>
           <Button my={2} colorScheme={'purple'} onClick={onOpen}>
-            🗎
+            <Icon as={HiDocumentText} />
           </Button>
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay />
