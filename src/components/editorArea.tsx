@@ -41,7 +41,7 @@ export function EditorArea() {
 
   const onSubmit = async () => {
     const resp = await makeRequest(request, variables, headers);
-    setResponse(JSON.stringify(resp, null, '\t'));
+    setResponse(JSON.stringify(resp, null, 4));
   };
 
   return (
@@ -55,7 +55,7 @@ export function EditorArea() {
         gap={2}
         px={2}
       >
-        <Textarea height={'100%'} onChange={(e) => setRequest(e.target.value)} />
+        <Textarea resize="none" height={'100%'} onChange={(e) => setRequest(e.target.value)} />
         <Accordion allowToggle>
           <AccordionItem>
             <Tabs isFitted variant="enclosed">
@@ -69,10 +69,18 @@ export function EditorArea() {
               <AccordionPanel px={0}>
                 <TabPanels>
                   <TabPanel p={0}>
-                    <Textarea onChange={(e) => setVariables(JSON.parse(e.target.value))} />
+                    <Textarea
+                      resize="none"
+                      minHeight={'25vh'}
+                      onChange={(e) => setVariables(JSON.parse(e.target.value))}
+                    />
                   </TabPanel>
                   <TabPanel p={0}>
-                    <Textarea onChange={(e) => setHeaders(JSON.parse(e.target.value))} />
+                    <Textarea
+                      resize="none"
+                      minHeight={'25vh'}
+                      onChange={(e) => setHeaders(JSON.parse(e.target.value))}
+                    />
                   </TabPanel>
                 </TabPanels>
               </AccordionPanel>
@@ -106,7 +114,7 @@ export function EditorArea() {
         </Box>
       </GridItem>
       <GridItem rowStart={1} colStart={3} colEnd={4} rowSpan={1} px={2}>
-        <Textarea readOnly minHeight={'100%'} value={response} />
+        <Textarea readOnly resize="none" minHeight={'100%'} value={response} />
       </GridItem>
     </Grid>
   );
