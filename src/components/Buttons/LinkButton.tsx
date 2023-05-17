@@ -1,5 +1,6 @@
 import { MouseEventHandler } from 'react';
 import { Link } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
 
 interface ButtonProps {
   label: string;
@@ -12,6 +13,9 @@ interface ButtonProps {
 export const LinkButton = (props: ButtonProps) => {
   return (
     <Link
+      as={NavLink}
+      end
+      to={props.source}
       href={props.source}
       color={props.color || 'white'}
       w={props.width}

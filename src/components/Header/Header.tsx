@@ -66,7 +66,7 @@ export const Header = () => {
             <>
               <GridItem justifySelf={'start'}>
                 <ButtonGroup variant="ghost">
-                  <LinkButton label="GraphiQL" source="/" />
+                  <LinkButton label="GraphiQL" source="/editor" />
                 </ButtonGroup>
               </GridItem>
               <GridItem>
@@ -83,6 +83,11 @@ export const Header = () => {
                         <LinkButton
                           label="Sign In"
                           source="/sign-in"
+                          handler={dummyAuthorization}
+                        />
+                        <LinkButton
+                          label="Sign Up"
+                          source="/sign-up"
                           handler={dummyAuthorization}
                         />
                         <ToggleButton label="Sign Up" hasBorder={true} />

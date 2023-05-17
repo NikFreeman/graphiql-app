@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '../store/slices/userSlice';
 import LoginForm from '../components/loginForm';
+import ErrorBoundary from '../utils/ErrorBoundarry';
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -20,7 +21,11 @@ function SignIn() {
       })
       .catch((error) => console.log('error=>', error));
   };
-  return <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>;
+  return (
+    <ErrorBoundary>
+      <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>
+    </ErrorBoundary>
+  );
 }
 
 export default SignIn;
