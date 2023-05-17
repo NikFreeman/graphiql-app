@@ -38,7 +38,11 @@ export function EditorArea() {
   const [variables, setVariables] = useState({});
   const [headers, setHeaders] = useState({});
   const [isShowExtraAreas, setIsShowExtraAreas] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isDocumentationOpen,
+    onOpen: onDocumentationOpen,
+    onClose: onDocumentationClose,
+  } = useDisclosure();
 
   getSchema();
 
@@ -98,10 +102,10 @@ export function EditorArea() {
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
             <Icon as={HiPlay} />
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onOpen}>
+          <Button my={2} colorScheme={'purple'} onClick={onDocumentationOpen}>
             <Icon as={HiDocumentText} />
           </Button>
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
             <DrawerOverlay />
             <DrawerContent maxW={'lg'}>
               <DrawerCloseButton />
