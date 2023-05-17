@@ -29,7 +29,7 @@ export const Header = () => {
   const { t, i18n } = useTranslation();
   const { onToggle } = useDisclosure();
 
-  const headerHeight = 140;
+  const headerHeight = 70;
 
   const scrollPixels = useScrollPixels();
 
@@ -46,8 +46,8 @@ export const Header = () => {
       <Fade in={scrollPixels > 300}>
         <ScrollTopButton />
       </Fade>
-      <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
-        <Text fontSize={isSmallerThan900 ? '2xl' : '6xl'}>{t('graphiqlBy')}</Text>
+      <Flex h="60px" bg="#695bd3" w="100%" minH="60px" justify="center" align="center">
+        <Text fontSize={isSmallerThan900 ? '2xl' : '4xl'}>{t('graphiqlBy')}</Text>
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
