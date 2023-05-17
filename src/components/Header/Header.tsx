@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 
 export const Header = () => {
-  // const [isAuthorized, setAuthorization] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
@@ -34,10 +33,6 @@ export const Header = () => {
   const scrollPixels = useScrollPixels();
 
   const { isAuth } = useAuth();
-
-  // const dummyAuthorization = () => {
-  //   isAuthorized ? setAuthorization(false) : setAuthorization(true);
-  // };
 
   if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
 
