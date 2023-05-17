@@ -28,7 +28,7 @@ import {
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
-import { getSchema } from '../helpers/variables';
+import { getSchema, schema } from '../helpers/variables';
 
 const Schema = React.lazy(() => import('./schema'));
 
@@ -44,11 +44,16 @@ export function EditorArea() {
     onClose: onDocumentationClose,
   } = useDisclosure();
 
-  getSchema();
-
   const onSubmit = async () => {
     const resp = await makeRequest(request, variables, headers);
-    setResponse(JSON.stringify(resp, null, 4));
+    setResponse(JSON.stringify(resp, null, 2));
+  };
+
+  const onDocLoadAndOpen = async () => {
+    if (!schema) {
+      await getSchema();
+    }
+    onDocumentationOpen();
   };
 
   const handleToggle = () => setIsShowExtraAreas(!isShowExtraAreas);
@@ -102,7 +107,7 @@ export function EditorArea() {
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
             <Icon as={HiPlay} />
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onDocumentationOpen}>
+          <Button my={2} colorScheme={'purple'} onClick={onDocLoadAndOpen}>
             <Icon as={HiDocumentText} />
           </Button>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>

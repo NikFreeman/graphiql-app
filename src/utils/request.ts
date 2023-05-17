@@ -9,5 +9,5 @@ export async function makeRequest(query: string, variables: object, optionalHead
     },
     body: JSON.stringify({ query: query, variables: variables }),
   });
-  return await res.json();
+  return res.json();
 }
