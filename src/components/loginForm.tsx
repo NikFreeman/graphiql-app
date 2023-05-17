@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
   Stack,
-  Heading,
   Text,
   useMediaQuery,
   useColorModeValue as colorModeValue,
@@ -42,7 +41,9 @@ function LoginForm(props: LoginFormProps) {
         w={isSmallerThan600 ? '90%' : '500px'}
       >
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>{props.title} </Heading>
+          <Text as="h2" fontSize={'6xl'}>
+            {props.title}{' '}
+          </Text>
           <Text fontSize={'lg'} color={'gray.600'}></Text>
         </Stack>
         <Flex
