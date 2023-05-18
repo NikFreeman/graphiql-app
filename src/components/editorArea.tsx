@@ -142,7 +142,7 @@ export function EditorArea() {
                   <AccordionIcon transform={isShowExtraAreas ? 'rotate(0)' : 'rotate(-180deg)'} />
                 </AccordionButton>
               </TabList>
-              <AccordionPanel px={0}>
+              <AccordionPanel px={0} pb={0}>
                 <TabPanels>
                   <TabPanel p={0}>
                     <Textarea
