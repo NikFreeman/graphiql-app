@@ -13,6 +13,9 @@ const theme = extendTheme({
       fontSize: ['17px', '14px'],
       fontWeight: '200',
     },
+    h2: {
+      fontFamily: `'Oswald', sans-serif`,
+    },
   },
   components: {
     Button: {
@@ -30,6 +33,12 @@ const theme = extendTheme({
         baseStyle: {
           fontSize: ['17px', '14px'],
           fontWeight: '200',
+        },
+      },
+      Heading: {
+        baseStyle: {
+          fontFamily: `'Oswald', sans-serif`,
+          size: '6xl',
         },
       },
       Link: {
