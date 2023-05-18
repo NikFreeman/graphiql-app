@@ -24,28 +24,63 @@ import {
   DrawerOverlay,
   SkeletonText,
   Icon,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
 } from '@chakra-ui/react';
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { makeRequest } from '../utils/request';
 import { getSchema } from '../helpers/variables';
+import { validationJSON } from '../utils/validationJson';
 
 const Schema = React.lazy(() => import('./schema'));
 
 export function EditorArea() {
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
-  const [variables, setVariables] = useState({});
-  const [headers, setHeaders] = useState({});
+  const [variables, setVariables] = useState('');
+  const [headers, setHeaders] = useState('');
+  const [variablesError, setVariablesError] = useState('');
+  const [headersError, setHeadersError] = useState('');
   const [isShowExtraAreas, setIsShowExtraAreas] = useState(false);
   const {
     isOpen: isDocumentationOpen,
     onOpen: onDocumentationOpen,
     onClose: onDocumentationClose,
   } = useDisclosure();
+  const {
+    isOpen: isPopoverVariablesOpen,
+    onOpen: onPopoverVariablesOpen,
+    onClose: onPopoverVariablesClose,
+  } = useDisclosure();
+  const {
+    isOpen: isPopoverHeadersOpen,
+    onOpen: onPopoverHeadersOpen,
+    onClose: onPopoverHeadersClose,
+  } = useDisclosure();
 
   const onSubmit = async () => {
-    const resp = await makeRequest(request, variables, headers);
-    setResponse(JSON.stringify(resp, null, 2));
+    const isVariablesValid = validationJSON(variables).isValid;
+    const isHeadersValid = validationJSON(headers).isValid;
+
+    if (isVariablesValid && isHeadersValid) {
+      const resp = await makeRequest(request, variables, headers);
+      setResponse(JSON.stringify(resp, null, 2));
+    } else if (!isVariablesValid) {
+      const resp = await makeRequest(request, '', headers);
+      setResponse(JSON.stringify(resp, null, 2));
+      setVariablesError(validationJSON(variables).message);
+      onPopoverVariablesOpen();
+    } else if (!isHeadersValid) {
+      const resp = await makeRequest(request, variables);
+      setResponse(JSON.stringify(resp, null, 2));
+      setHeadersError(validationJSON(headers).message);
+      onPopoverHeadersOpen();
+    }
   };
 
   useEffect(() => {
@@ -73,8 +108,36 @@ export function EditorArea() {
           <AccordionItem>
             <Tabs isFitted variant="enclosed">
               <TabList pt={1}>
-                <Tab>Variables</Tab>
-                <Tab>Headers</Tab>
+                <Popover
+                  isOpen={isPopoverVariablesOpen}
+                  onClose={onPopoverVariablesClose}
+                  placement="top"
+                >
+                  <PopoverTrigger>
+                    <Tab>Variables</Tab>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverCloseButton />
+                    <PopoverHeader>Error in variable field</PopoverHeader>
+                    <PopoverBody>{variablesError}</PopoverBody>
+                    <PopoverArrow />
+                  </PopoverContent>
+                </Popover>
+                <Popover
+                  isOpen={isPopoverHeadersOpen}
+                  onClose={onPopoverHeadersClose}
+                  placement="top"
+                >
+                  <PopoverTrigger>
+                    <Tab>Headers</Tab>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverCloseButton />
+                    <PopoverHeader>Error in headers field</PopoverHeader>
+                    <PopoverBody>{headersError}</PopoverBody>
+                    <PopoverArrow />
+                  </PopoverContent>
+                </Popover>
                 <AccordionButton flex="0.1" justifyContent="center" onClick={handleToggle}>
                   <AccordionIcon transform={isShowExtraAreas ? 'rotate(0)' : 'rotate(-180deg)'} />
                 </AccordionButton>
@@ -85,14 +148,14 @@ export function EditorArea() {
                     <Textarea
                       resize="none"
                       minHeight={'25vh'}
-                      onChange={(e) => setVariables(JSON.parse(e.target.value))}
+                      onChange={(e) => setVariables(e.target.value)}
                     />
                   </TabPanel>
                   <TabPanel p={0}>
                     <Textarea
                       resize="none"
                       minHeight={'25vh'}
-                      onChange={(e) => setHeaders(JSON.parse(e.target.value))}
+                      onChange={(e) => setHeaders(e.target.value)}
                     />
                   </TabPanel>
                 </TabPanels>
