@@ -31,7 +31,8 @@ function LoginForm(props: LoginFormProps) {
     // formState: { errors, isSubmitting },
   } = useForm<IFormInput>();
   const handleClick = (data: IFormInput) => {
-    console.log(data);
+    console.log('data=>', data);
+    props.handleClick(data.email, data.password);
   };
   return (
     <form onSubmit={handleSubmit(handleClick)}>

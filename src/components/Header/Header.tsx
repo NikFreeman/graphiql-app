@@ -18,9 +18,13 @@ import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
 import { useScrollPixels } from '../../hooks/scrollPixels';
 import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
+import { useAuth } from '../../hooks/useAuth';
+import { SignOut } from '../../hooks/useSingOut';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../utils/firebase';
 
 export const Header = () => {
-  const [isAuthorized, setAuthorization] = useState(false);
+  const { isAuth } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
@@ -30,12 +34,7 @@ export const Header = () => {
 
   const scrollPixels = useScrollPixels();
 
-  const dummyAuthorization = () => {
-    isAuthorized ? setAuthorization(false) : setAuthorization(true);
-  };
-
   if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
-
   return (
     <>
       <Fade in={scrollPixels > 300}>
@@ -77,31 +76,22 @@ export const Header = () => {
               <GridItem justifySelf={'end'}>
                 <ButtonGroup variant="ghost">
                   <ToggleButton label="ENG" hasBorder={false} />
-                  {!isAuthorized && (
-                    <SlideFade in={!isAuthorized}>
+                  {!isAuth && (
+                    <SlideFade in={!isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton
-                          label="Sign In"
-                          source="/sign-in"
-                          handler={dummyAuthorization}
-                        />
-                        <LinkButton
-                          label="Sign Up"
-                          source="/sign-up"
-                          handler={dummyAuthorization}
-                        />
-                        <ToggleButton label="Sign Up" hasBorder={true} />
+                        <LinkButton label="Sign In" source="/sign-in" />
+                        <LinkButton label="Sign Up" source="/sign-up" />
                       </ButtonGroup>
                     </SlideFade>
                   )}
-                  {isAuthorized && (
-                    <SlideFade in={isAuthorized}>
+                  {isAuth && (
+                    <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="/" />
+                        <LinkButton label="Go to Main Page" source="/editor" />
                         <ToggleButton
                           label="Sign Out"
                           hasBorder={true}
-                          handler={dummyAuthorization}
+                          handler={() => signOut(auth)}
                         />
                       </ButtonGroup>
                     </SlideFade>
@@ -145,24 +135,19 @@ export const Header = () => {
               flexDir={'column'}
             >
               <ToggleButton label="Selected Language: ENG" hasBorder={true} />
-              {!isAuthorized && (
-                <SlideFade in={!isAuthorized}>
+              {!isAuth && (
+                <SlideFade in={!isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton
-                      label="Sign In"
-                      source="/sign-in"
-                      handler={dummyAuthorization}
-                      width="100%"
-                    />
+                    <LinkButton label="Sign In" source="/sign-in" width="100%" />
                     <ToggleButton hasBorder={true} label="Sign Up" />
                   </Flex>
                 </SlideFade>
               )}
-              {isAuthorized && (
-                <SlideFade in={isAuthorized}>
+              {isAuth && (
+                <SlideFade in={isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label="Go to Main Page" source="/" width="100%" />
-                    <ToggleButton hasBorder={true} label="Sign Out" handler={dummyAuthorization} />
+                    <LinkButton label="Go to Editor" source="/editor" width="100%" />
+                    <ToggleButton hasBorder={true} label="Sign Out" handler={SignOut} />
                   </Flex>
                 </SlideFade>
               )}

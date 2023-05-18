@@ -4,7 +4,7 @@ interface ShowErrorProps {
   message: string;
 }
 
-function ShowError({ message }: ShowErrorProps) {
+export function ShowError({ message }: ShowErrorProps) {
   const toast = useToast();
   return toast({
     description: message,
@@ -14,5 +14,3 @@ function ShowError({ message }: ShowErrorProps) {
     duration: 3000,
   });
 }
-
-export default ShowError;

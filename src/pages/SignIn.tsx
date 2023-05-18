@@ -1,31 +1,36 @@
 import { auth } from '../utils/firebase';
-import { useDispatch } from 'react-redux';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from '../store/slices/userSlice';
 import LoginForm from '../components/loginForm';
-import ErrorBoundary from '../utils/ErrorBoundarry';
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
-  const dispatch = useDispatch();
+  const toast = useToast();
+  const navigate = useNavigate();
   const handleSignIn = (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        console.log('user->', user);
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
-          })
-        );
+        navigate('/editor');
+        return toast({
+          description: `${user.email} is logged`,
+          position: 'top-right',
+          status: 'info',
+          isClosable: true,
+          duration: 3000,
+        });
       })
-      .catch((error) => console.log('error=>', error));
+      .catch((e) => {
+        return toast({
+          description: e.message,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+          duration: 5000,
+        });
+      });
   };
-  return (
-    <ErrorBoundary>
-      <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>
-    </ErrorBoundary>
-  );
+
+  return <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>;
 }
 
 export default SignIn;
