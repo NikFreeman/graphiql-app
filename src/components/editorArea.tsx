@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import {
   Textarea,
   Grid,
@@ -26,9 +26,8 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
-import { useState } from 'react';
 import { makeRequest } from '../utils/request';
-import { getSchema, schema } from '../helpers/variables';
+import { getSchema } from '../helpers/variables';
 
 const Schema = React.lazy(() => import('./schema'));
 
@@ -49,12 +48,12 @@ export function EditorArea() {
     setResponse(JSON.stringify(resp, null, 2));
   };
 
-  const onDocLoadAndOpen = async () => {
-    if (!schema) {
+  useEffect(() => {
+    async function loadDoc() {
       await getSchema();
     }
-    onDocumentationOpen();
-  };
+    loadDoc();
+  }, []);
 
   const handleToggle = () => setIsShowExtraAreas(!isShowExtraAreas);
 
@@ -107,7 +106,7 @@ export function EditorArea() {
           <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
             <Icon as={HiPlay} />
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onDocLoadAndOpen}>
+          <Button my={2} colorScheme={'purple'} onClick={onDocumentationOpen}>
             <Icon as={HiDocumentText} />
           </Button>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
