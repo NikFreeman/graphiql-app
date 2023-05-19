@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 export function useAuth() {
   const [user, loading, error] = useAuthState(auth);
+  console.log('user->', user, 'loading->', loading);
   const toast = useToast();
   if (error) {
     toast({
