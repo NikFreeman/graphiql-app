@@ -71,16 +71,21 @@ export function EditorArea() {
     if (isVariablesValid && isHeadersValid) {
       const resp = await makeRequest(request, variables, headers);
       setResponse(JSON.stringify(resp, null, 2));
-    } else if (!isVariablesValid) {
+    } else if (!isVariablesValid && isHeadersValid) {
       const resp = await makeRequest(request, '', headers);
       setResponse(JSON.stringify(resp, null, 2));
       setVariablesError(validationJSON(variables).message);
       onPopoverVariablesOpen();
-    } else if (!isHeadersValid) {
+    } else if (isVariablesValid && !isHeadersValid) {
       const resp = await makeRequest(request, variables);
       setResponse(JSON.stringify(resp, null, 2));
       setHeadersError(validationJSON(headers).message);
       onPopoverHeadersOpen();
+    } else if (!isVariablesValid && !isHeadersValid) {
+      const resp = await makeRequest(request, '');
+      setResponse(JSON.stringify(resp, null, 2));
+      setVariablesError(validationJSON(variables).message);
+      onPopoverVariablesOpen();
     }
   };
 
@@ -121,7 +126,10 @@ export function EditorArea() {
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverCloseButton />
-                    <PopoverHeader>Error in variable field</PopoverHeader>
+                    <PopoverHeader>
+                      {t('fieldError')}
+                      {t('variables')}"
+                    </PopoverHeader>
                     <PopoverBody>{variablesError}</PopoverBody>
                     <PopoverArrow />
                   </PopoverContent>
@@ -136,7 +144,10 @@ export function EditorArea() {
                   </PopoverTrigger>
                   <PopoverContent>
                     <PopoverCloseButton />
-                    <PopoverHeader>Error in headers field</PopoverHeader>
+                    <PopoverHeader>
+                      {t('fieldError')}
+                      {t('headers')}"
+                    </PopoverHeader>
                     <PopoverBody>{headersError}</PopoverBody>
                     <PopoverArrow />
                   </PopoverContent>
