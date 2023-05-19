@@ -16,7 +16,6 @@ export const LinkButton = (props: ButtonProps) => {
       as={NavLink}
       end
       to={props.source}
-      href={props.source}
       color={props.color || 'white'}
       w={props.width}
       minW="80px"

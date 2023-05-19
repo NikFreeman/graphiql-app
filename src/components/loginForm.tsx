@@ -2,17 +2,17 @@ import { useForm } from 'react-hook-form';
 
 import {
   Flex,
-  Box,
   FormControl,
   FormLabel,
   Input,
   Stack,
-  Heading,
   Text,
+  useMediaQuery,
   useColorModeValue as colorModeValue,
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { ToggleButton } from '../components/Buttons/ToggleButton';
+import { useTranslation } from 'react-i18next';
 
 interface LoginFormProps {
   title: string;
@@ -24,13 +24,16 @@ interface FormInput {
   email: string;
   password: string;
 }
-
 function LoginForm(props: LoginFormProps) {
+  const { t } = useTranslation();
+  const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+
   const {
     handleSubmit,
     register,
     // formState: { errors, isSubmitting },
   } = useForm<FormInput>();
+
   const handleClick = (data: FormInput) => {
     props.handleClick(data.email, data.password);
   };
@@ -41,22 +44,39 @@ function LoginForm(props: LoginFormProps) {
         flexGrow={'1'}
         align={'center'}
         justify={'center'}
-        bg={colorModeValue('gray.50', 'gray.800')}
+        bg={colorModeValue('gray.50', 'gray.500')}
       >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack
+          spacing={8}
+          mx={'auto'}
+          maxW={'lg'}
+          py={12}
+          px={6}
+          w={isSmallerThan600 ? '90%' : '500px'}
+        >
           <Stack align={'center'}>
-            <Heading fontSize={'4xl'}>{props.title} </Heading>
+            <Text as="h2" fontSize={'6xl'}>
+              {props.title}{' '}
+            </Text>
             <Text fontSize={'lg'} color={'gray.600'}></Text>
           </Stack>
-          <Box rounded={'lg'} bg={colorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
-            <Stack spacing={4}>
+          <Flex
+            bg={colorModeValue('white', 'gray.700')}
+            boxShadow={'lg'}
+            p={8}
+            borderBottomRightRadius="0.5rem"
+            borderBottomLeftRadius="0"
+            borderTopLeftRadius="1rem"
+            borderTopRightRadius="0"
+          >
+            <Stack spacing={4} w={'100%'}>
               <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel>{t('email')}</FormLabel>
                 <Input type="email" {...register('email', { required: 'This is required' })} />
                 <FormErrorMessage>Email is required.</FormErrorMessage>
               </FormControl>
               <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('password')}</FormLabel>
                 <Input
                   type="password"
                   {...register('password', { required: 'This is required' })}
@@ -71,7 +91,7 @@ function LoginForm(props: LoginFormProps) {
                 <ToggleButton color="black" type="submit" hasBorder={true} label={props.btnTitle} />
               </Stack>
             </Stack>
-          </Box>
+          </Flex>
         </Stack>
       </Flex>
     </form>

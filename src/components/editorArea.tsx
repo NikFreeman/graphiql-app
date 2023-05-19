@@ -29,6 +29,7 @@ import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { useState } from 'react';
 import { makeRequest } from '../utils/request';
 import { getSchema, schema } from '../helpers/variables';
+import { useTranslation } from 'react-i18next';
 
 const Schema = React.lazy(() => import('./schema'));
 
@@ -58,6 +59,8 @@ export function EditorArea() {
 
   const handleToggle = () => setIsShowExtraAreas(!isShowExtraAreas);
 
+  const { t } = useTranslation();
+
   return (
     <Grid gridTemplateColumns={'1fr 70px 1fr'} flexGrow={1}>
       <GridItem
@@ -74,8 +77,8 @@ export function EditorArea() {
           <AccordionItem>
             <Tabs isFitted variant="enclosed">
               <TabList pt={1}>
-                <Tab>Variables</Tab>
-                <Tab>Headers</Tab>
+                <Tab>{t('variables')}</Tab>
+                <Tab>{t('headers')}</Tab>
                 <AccordionButton flex="0.1" justifyContent="center" onClick={handleToggle}>
                   <AccordionIcon transform={isShowExtraAreas ? 'rotate(0)' : 'rotate(-180deg)'} />
                 </AccordionButton>
@@ -114,7 +117,7 @@ export function EditorArea() {
             <DrawerOverlay />
             <DrawerContent maxW={'lg'}>
               <DrawerCloseButton />
-              <DrawerHeader>Docs</DrawerHeader>
+              <DrawerHeader>{t('docs')}</DrawerHeader>
 
               <DrawerBody>
                 <Suspense

@@ -3,10 +3,13 @@ import { AuthError, createUserWithEmailAndPassword } from 'firebase/auth';
 import LoginForm from '../components/loginForm';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function SignUp() {
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleSignUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
@@ -29,7 +32,9 @@ function SignUp() {
         });
       });
   };
-  return <LoginForm handleClick={handleSignUp} title="Sign Up" btnTitle="Sign Up"></LoginForm>;
+  return (
+    <LoginForm handleClick={handleSignUp} title={t('signUp')} btnTitle={t('signUp')}></LoginForm>
+  );
 }
 
 export default SignUp;

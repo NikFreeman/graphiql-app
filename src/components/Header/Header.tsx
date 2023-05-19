@@ -22,15 +22,17 @@ import { useAuth } from '../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
   const { isAuth } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+  const { t, i18n } = useTranslation();
   const { onToggle } = useDisclosure();
 
-  const headerHeight = 150;
+  const headerHeight = 70;
 
   const scrollPixels = useScrollPixels();
   const navigate = useNavigate();
@@ -44,8 +46,8 @@ export const Header = () => {
       <Fade in={scrollPixels > 300}>
         <ScrollTopButton />
       </Fade>
-      <Flex h="100px" bg="#695bd3" w="100%" minH="100px" justify="center" align="center">
-        <Text fontSize={isSmallerThan600 ? '2xl' : '6xl'}>GraphiQL by Musical Trio</Text>
+      <Flex h="60px" bg="#695bd3" w="100%" minH="60px" justify="center" align="center">
+        <Text fontSize={isSmallerThan900 ? '2xl' : '4xl'}>{t('graphiqlBy')}</Text>
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
@@ -74,25 +76,29 @@ export const Header = () => {
               </GridItem>
               <GridItem>
                 <Text fontSize="2xl" color="white">
-                  Welcome!
+                  {t('welcome')}
                 </Text>
               </GridItem>
               <GridItem justifySelf={'end'}>
                 <ButtonGroup variant="ghost">
-                  <ToggleButton label="ENG" hasBorder={false} />
+                  <ToggleButton
+                    label={t('lang')}
+                    hasBorder={false}
+                    handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
+                  />
                   {!isAuth && (
                     <SlideFade in={!isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Sign In" source="/sign-in" />
-                        <LinkButton label="Sign Up" source="/sign-up" />
+                        <LinkButton label={t('signIn')} source="/sign-in" />
+                        <LinkButton label={t('signUp')} source="/sign-up" />
                       </ButtonGroup>
                     </SlideFade>
                   )}
                   {isAuth && (
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="/editor" />
-                        <ToggleButton label="Sign Out" hasBorder={true} handler={SignOut} />
+                        <LinkButton label="Go to Main Page" source="//editor" />
+                        <ToggleButton label={t('signOut')} hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>
                   )}
@@ -104,7 +110,7 @@ export const Header = () => {
             <>
               <GridItem justifySelf={'start'}>
                 <Text fontSize="2xl" color="white">
-                  Welcome!
+                  {t('welcome')}
                 </Text>
               </GridItem>
               <GridItem justifySelf={'end'}>
@@ -134,20 +140,24 @@ export const Header = () => {
               p={'2rem'}
               flexDir={'column'}
             >
-              <ToggleButton label="Selected Language: ENG" hasBorder={true} />
+              <ToggleButton
+                label={t('selectedLang')}
+                hasBorder={true}
+                handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
+              />
               {!isAuth && (
                 <SlideFade in={!isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label="Sign In" source="/sign-in" width="100%" />
-                    <ToggleButton hasBorder={true} label="Sign Up" />
+                    <LinkButton label={t('signIn')} source="/sign-in" width="100%" />
+                    <LinkButton label={t('signUp')} source="/sign-up" width="100%" />
                   </Flex>
                 </SlideFade>
               )}
               {isAuth && (
                 <SlideFade in={isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label="Go to Editor" source="/editor" width="100%" />
-                    <ToggleButton hasBorder={true} label="Sign Out" handler={SignOut} />
+                    <LinkButton label={t('goToMain')} source="/editor" width="100%" />
+                    <ToggleButton hasBorder={true} label={t('signOut')} handler={SignOut} />
                   </Flex>
                 </SlideFade>
               )}

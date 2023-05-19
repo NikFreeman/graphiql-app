@@ -3,10 +3,13 @@ import { AuthError, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginForm from '../components/loginForm';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function SignIn() {
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const handleSignIn = (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
@@ -30,7 +33,9 @@ function SignIn() {
       });
   };
 
-  return <LoginForm handleClick={handleSignIn} title="Sign In" btnTitle="Sign In"></LoginForm>;
+  return (
+    <LoginForm handleClick={handleSignIn} title={t('signIn')} btnTitle={t('signIn')}></LoginForm>
+  );
 }
 
 export default SignIn;

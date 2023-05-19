@@ -1,7 +1,9 @@
 import { Text, Flex } from '@chakra-ui/react';
 import { LinkButton } from '../components/Buttons/LinkButton';
+import { useTranslation } from 'react-i18next';
 
 function NotFound() {
+  const { t } = useTranslation();
   return (
     <Flex
       alignItems={'center'}
@@ -12,8 +14,8 @@ function NotFound() {
       gap={'1rem'}
     >
       <Text fontSize="6xl">404</Text>
-      <Text fontSize="3xl">Not found</Text>
-      <LinkButton label="Back to Main Page" source="/" color="black" />
+      <Text fontSize="3xl">{t('notFound')}</Text>
+      <LinkButton label={t('goToMain')} source="/" color="black" />
     </Flex>
   );
 }
