@@ -19,6 +19,7 @@ export const SignOut = async () => {
       duration: 3000,
     });
   }
+
   if (loading) {
     return toast({
       description: 'Loading',
@@ -28,6 +29,7 @@ export const SignOut = async () => {
       duration: 2000,
     });
   }
+
   await signOut();
   navigate('/');
   return toast({

@@ -19,7 +19,8 @@ interface LoginFormProps {
   btnTitle: string;
   handleClick: (email: string, pass: string) => void;
 }
-interface IFormInput {
+
+interface FormInput {
   email: string;
   password: string;
 }
@@ -29,9 +30,8 @@ function LoginForm(props: LoginFormProps) {
     handleSubmit,
     register,
     // formState: { errors, isSubmitting },
-  } = useForm<IFormInput>();
-  const handleClick = (data: IFormInput) => {
-    console.log('data=>', data);
+  } = useForm<FormInput>();
+  const handleClick = (data: FormInput) => {
     props.handleClick(data.email, data.password);
   };
   return (

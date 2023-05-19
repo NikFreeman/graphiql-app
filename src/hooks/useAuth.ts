@@ -14,14 +14,5 @@ export function useAuth() {
       duration: 3000,
     });
   }
-  // if (loading) {
-  //   toast({
-  //     description: 'Loading',
-  //     position: 'top-right',
-  //     status: 'info',
-  //     isClosable: true,
-  //     duration: 2000,
-  //   });
-  // }
   return { isAuth: !!user, user, loading, error };
 }

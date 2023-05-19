@@ -1,5 +1,5 @@
 import { auth } from '../utils/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthError, signInWithEmailAndPassword } from 'firebase/auth';
 import LoginForm from '../components/loginForm';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -19,9 +19,9 @@ function SignIn() {
           duration: 3000,
         });
       })
-      .catch((e) => {
+      .catch((err: AuthError) => {
         return toast({
-          description: e.message,
+          description: err.message,
           position: 'top-right',
           status: 'error',
           isClosable: true,
