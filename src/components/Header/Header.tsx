@@ -97,7 +97,7 @@ export const Header = () => {
                   {isAuth && (
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="//editor" />
+                        <LinkButton label="Go to Main Page" source="/editor" />
                         <ToggleButton label={t('signOut')} hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>

@@ -31,7 +31,7 @@ function LoginForm(props: LoginFormProps) {
   const {
     handleSubmit,
     register,
-    // formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FormInput>();
 
   const handleClick = (data: FormInput) => {
@@ -70,17 +70,26 @@ function LoginForm(props: LoginFormProps) {
             borderTopRightRadius="0"
           >
             <Stack spacing={4} w={'100%'}>
-              <FormControl id="email" isRequired>
+              <FormControl id="email" isInvalid={!!errors.email}>
                 <FormLabel>{t('email')}</FormLabel>
-                <Input type="email" {...register('email', { required: 'This is required' })} />
-                <FormErrorMessage>Email is required.</FormErrorMessage>
+                <Input
+                  type="email"
+                  id="email"
+                  placeholder="E-mail"
+                  {...register('email', { required: 'This is required' })}
+                />
+                <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
               </FormControl>
-              <FormControl id="password" isRequired>
+              <FormControl id="password" isInvalid={!!errors.password}>
                 <FormLabel>{t('password')}</FormLabel>
                 <Input
                   type="password"
-                  {...register('password', { required: 'This is required' })}
+                  {...register('password', {
+                    required: 'This is required',
+                    minLength: { value: 6, message: 'Minimum length should be 6' },
+                  })}
                 />
+                <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -88,7 +97,13 @@ function LoginForm(props: LoginFormProps) {
                   align={'start'}
                   justify={'space-between'}
                 ></Stack>
-                <ToggleButton color="black" type="submit" hasBorder={true} label={props.btnTitle} />
+                <ToggleButton
+                  color="black"
+                  type="submit"
+                  isLoading={isSubmitting}
+                  hasBorder={true}
+                  label={props.btnTitle}
+                />
               </Stack>
             </Stack>
           </Flex>

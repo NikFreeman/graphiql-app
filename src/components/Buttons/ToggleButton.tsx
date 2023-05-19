@@ -6,6 +6,7 @@ interface ButtonProps {
   color?: string;
   type?: 'submit' | 'reset' | 'button' | undefined;
   hasBorder?: boolean;
+  isLoading?: boolean;
   handler?: MouseEventHandler;
 }
 
@@ -19,6 +20,7 @@ export const ToggleButton = (props: ButtonProps) => {
       type={props.type || 'button'}
       minW="80px"
       h={'40px'}
+      isLoading={props.isLoading}
       borderColor={props.color || 'white'}
       border={props.hasBorder ? 'solid 1px' : 'solid 1px transparent'}
     >
