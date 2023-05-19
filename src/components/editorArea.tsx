@@ -63,12 +63,18 @@ export function EditorArea() {
     onOpen: onPopoverHeadersOpen,
     onClose: onPopoverHeadersClose,
   } = useDisclosure();
+  const {
+    isOpen: isPopoverQueryOpen,
+    onOpen: onPopoverQueryOpen,
+    onClose: onPopoverQueryClose,
+  } = useDisclosure();
 
   const onSubmit = async () => {
     const isVariablesValid = validationJSON(variables).isValid;
     const isHeadersValid = validationJSON(headers).isValid;
-
-    if (isVariablesValid && isHeadersValid) {
+    if (!request) {
+      onPopoverQueryOpen();
+    } else if (isVariablesValid && isHeadersValid) {
       const resp = await makeRequest(request, variables, headers);
       setResponse(JSON.stringify(resp, null, 2));
     } else if (!isVariablesValid && isHeadersValid) {
@@ -111,7 +117,18 @@ export function EditorArea() {
         gap={2}
         px={2}
       >
-        <Textarea resize="none" height={'100%'} onChange={(e) => setRequest(e.target.value)} />
+        <Popover isOpen={isPopoverQueryOpen} onClose={onPopoverQueryClose} placement="right">
+          <PopoverTrigger>
+            <Textarea resize="none" height={'100%'} onChange={(e) => setRequest(e.target.value)} />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverCloseButton />
+            <PopoverArrow />
+            <PopoverHeader>{t('emptyField')}</PopoverHeader>
+            <PopoverBody>{t('typeQuery')}</PopoverBody>
+          </PopoverContent>
+        </Popover>
+
         <Accordion allowToggle>
           <AccordionItem>
             <Tabs isFitted variant="enclosed">
