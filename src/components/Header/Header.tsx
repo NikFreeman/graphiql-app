@@ -19,9 +19,9 @@ import './Header.css';
 import { useScrollPixels } from '../../hooks/scrollPixels';
 import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
 import { useAuth } from '../../hooks/useAuth';
-import { SignOut } from '../../hooks/useSingOut';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const { isAuth } = useAuth();
@@ -33,8 +33,12 @@ export const Header = () => {
   const headerHeight = 150;
 
   const scrollPixels = useScrollPixels();
+  const navigate = useNavigate();
+  const SignOut = () => {
+    signOut(auth);
+    navigate('/');
+  };
 
-  if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
   return (
     <>
       <Fade in={scrollPixels > 300}>
@@ -88,11 +92,7 @@ export const Header = () => {
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
                         <LinkButton label="Go to Main Page" source="/editor" />
-                        <ToggleButton
-                          label="Sign Out"
-                          hasBorder={true}
-                          handler={() => signOut(auth)}
-                        />
+                        <ToggleButton label="Sign Out" hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>
                   )}

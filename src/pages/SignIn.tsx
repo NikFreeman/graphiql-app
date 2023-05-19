@@ -11,8 +11,8 @@ function SignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         navigate('/editor');
-        return toast({
-          description: `${user.email} is logged`,
+        toast({
+          description: `${user.email} is logged in`,
           position: 'top-right',
           status: 'info',
           isClosable: true,
@@ -20,7 +20,7 @@ function SignIn() {
         });
       })
       .catch((err: AuthError) => {
-        return toast({
+        toast({
           description: err.message,
           position: 'top-right',
           status: 'error',

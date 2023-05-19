@@ -11,7 +11,7 @@ function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         navigate('/editor');
-        return toast({
+        toast({
           description: `${user.email} is logged`,
           position: 'top-right',
           status: 'info',
@@ -20,7 +20,7 @@ function SignUp() {
         });
       })
       .catch((err: AuthError) => {
-        return toast({
+        toast({
           description: err.message,
           position: 'top-right',
           status: 'error',

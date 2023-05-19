@@ -11,7 +11,7 @@ export const SignOut = async () => {
   const navigate = useNavigate();
 
   if (error) {
-    return toast({
+    toast({
       description: error.message,
       position: 'top-right',
       status: 'error',
@@ -21,7 +21,7 @@ export const SignOut = async () => {
   }
 
   if (loading) {
-    return toast({
+    toast({
       description: 'Loading',
       position: 'top-right',
       status: 'info',
@@ -32,7 +32,7 @@ export const SignOut = async () => {
 
   await signOut();
   navigate('/');
-  return toast({
+  toast({
     description: 'Sign Out',
     position: 'top-right',
     status: 'info',
