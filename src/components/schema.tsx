@@ -5,9 +5,11 @@ import {
   AccordionIcon,
   AccordionPanel,
   Box,
+  SkeletonText,
 } from '@chakra-ui/react';
 
-import { schema } from '../helpers/variables';
+import { getSchema } from '../helpers/variables';
+import { useEffect, useState } from 'react';
 
 type Arg = {
   name: string;
@@ -71,26 +73,43 @@ function getTypes(field: Field): string {
   )}${field.type.kind === 'LIST' ? ']' : ''}`;
 }
 
+let schema: SchemaType;
+
 export default function Schema() {
+  const [isSchemaLoaded, setIsSchemaLoaded] = useState(false);
+  useEffect(() => {
+    async function loadDoc() {
+      if (!schema) {
+        schema = await getSchema().then((res) => res);
+      }
+      setIsSchemaLoaded(!!schema);
+    }
+    loadDoc();
+  }, []);
   return (
-    <Accordion allowToggle>
-      <AccordionItem>
-        <h2>
-          <AccordionButton>
-            <Box as="span" flex="1" textAlign="left">
-              Query: {schema.types[0].name}
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <Box as="span" flex="1" textAlign="left" fontSize="sm">
-            {schema.types[0].description}
-          </Box>
-        </h2>
-        <AccordionPanel pb={4} px={0}>
-          <SchemaTree typeName={schema.types[0].name} />
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+    <>
+      {isSchemaLoaded && (
+        <Accordion allowToggle>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex="1" textAlign="left">
+                  Query: {schema.types[0].name}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+              <Box as="span" flex="1" textAlign="left" fontSize="sm">
+                {schema.types[0].description}
+              </Box>
+            </h2>
+            <AccordionPanel pb={4} px={0}>
+              <SchemaTree typeName={schema.types[0].name} />
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      )}
+      {!isSchemaLoaded && <SkeletonText mt="4" noOfLines={12} spacing="4" skeletonHeight="3" />}
+    </>
   );
 }
 

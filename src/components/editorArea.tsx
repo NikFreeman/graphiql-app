@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import {
   Textarea,
   Grid,
@@ -35,7 +35,6 @@ import {
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { makeRequest } from '../utils/request';
 import { validationJSON } from '../utils/validationJson';
-import { getSchema } from '../helpers/variables';
 import { useTranslation } from 'react-i18next';
 
 const Schema = React.lazy(() => import('./schema'));
@@ -76,6 +75,7 @@ export function EditorArea() {
       onPopoverQueryOpen();
     } else if (isVariablesValid && isHeadersValid) {
       const resp = await makeRequest(request, variables, headers);
+      console.log(resp);
       setResponse(JSON.stringify(resp, null, 2));
     } else if (!isVariablesValid && isHeadersValid) {
       const resp = await makeRequest(request, '', headers);
@@ -94,13 +94,6 @@ export function EditorArea() {
       onPopoverVariablesOpen();
     }
   };
-
-  useEffect(() => {
-    async function loadDoc() {
-      await getSchema();
-    }
-    loadDoc();
-  }, []);
 
   const handleToggle = () => setIsShowExtraAreas(!isShowExtraAreas);
 
