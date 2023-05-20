@@ -31,6 +31,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  useToast,
 } from '@chakra-ui/react';
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { makeRequest } from '../utils/request';
@@ -38,6 +39,24 @@ import { validationJSON } from '../utils/validationJson';
 import { useTranslation } from 'react-i18next';
 
 const Schema = React.lazy(() => import('./schema'));
+
+type Location = {
+  line: number;
+  column: number;
+};
+
+type ErrorType = {
+  message: string;
+  locations: Location[];
+  extensions: {
+    code: string;
+  };
+};
+
+type Response = {
+  data?: object;
+  errors?: ErrorType[];
+};
 
 export function EditorArea() {
   const [request, setRequest] = useState('');
@@ -67,6 +86,7 @@ export function EditorArea() {
     onOpen: onPopoverQueryOpen,
     onClose: onPopoverQueryClose,
   } = useDisclosure();
+  const toast = useToast();
 
   const onSubmit = async () => {
     const isVariablesValid = validationJSON(variables).isValid;
@@ -74,24 +94,27 @@ export function EditorArea() {
     if (!request) {
       onPopoverQueryOpen();
     } else if (isVariablesValid && isHeadersValid) {
-      const resp = await makeRequest(request, variables, headers);
-      console.log(resp);
-      setResponse(JSON.stringify(resp, null, 2));
-    } else if (!isVariablesValid && isHeadersValid) {
-      const resp = await makeRequest(request, '', headers);
-      setResponse(JSON.stringify(resp, null, 2));
+      const resp: Response = await makeRequest(request, variables, headers);
+      if (resp.errors) {
+        resp.errors.forEach((error: ErrorType) => {
+          toast({
+            title: error.extensions.code,
+            description: error.message,
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+            duration: 7000,
+          });
+        });
+      } else {
+        setResponse(JSON.stringify(resp, null, 2));
+      }
+    } else if (!isVariablesValid) {
       setVariablesError(validationJSON(variables).message);
       onPopoverVariablesOpen();
     } else if (isVariablesValid && !isHeadersValid) {
-      const resp = await makeRequest(request, variables);
-      setResponse(JSON.stringify(resp, null, 2));
       setHeadersError(validationJSON(headers).message);
       onPopoverHeadersOpen();
-    } else if (!isVariablesValid && !isHeadersValid) {
-      const resp = await makeRequest(request, '');
-      setResponse(JSON.stringify(resp, null, 2));
-      setVariablesError(validationJSON(variables).message);
-      onPopoverVariablesOpen();
     }
   };
 
