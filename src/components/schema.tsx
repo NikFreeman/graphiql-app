@@ -5,7 +5,10 @@ import {
   AccordionIcon,
   AccordionPanel,
   Box,
+  Text,
 } from '@chakra-ui/react';
+
+//import { useState, useRef } from 'react';
 
 import { schema } from '../helpers/variables';
 
@@ -75,7 +78,7 @@ export default function Schema() {
   return (
     <Accordion allowToggle>
       <AccordionItem>
-        <h2>
+        <Text as="h2">
           <AccordionButton>
             <Box as="span" flex="1" textAlign="left">
               Query: {schema.types[0].name}
@@ -85,7 +88,7 @@ export default function Schema() {
           <Box as="span" flex="1" textAlign="left" fontSize="sm">
             {schema.types[0].description}
           </Box>
-        </h2>
+        </Text>
         <AccordionPanel pb={4} px={0}>
           <SchemaTree typeName={schema.types[0].name} />
         </AccordionPanel>
@@ -97,39 +100,82 @@ export default function Schema() {
 interface DrawTreeProps {
   field?: Field;
   typeName?: string;
+  padding?: string;
+  margin?: string;
+  background?: string;
 }
 
-function SchemaTree({ field, typeName }: DrawTreeProps) {
+function SchemaTree({ field, typeName, padding, margin, background }: DrawTreeProps) {
   const fieldTypeName = typeName ? typeName : field && getTypeName(field);
   const type = schema.types.find((type) => type.name === fieldTypeName);
   if (type && type.fields) {
     return (
-      <Accordion allowToggle>
+      <Accordion allowToggle className="accordion-tree">
         {type.fields.map((field) => {
           return (
-            <AccordionItem key={field.name}>
+            <AccordionItem
+              key={field.name}
+              className="accordion-leaf"
+              border={'solid 2px'}
+              borderColor={'gray.100'}
+              py={'6px'}
+              my={'5px'}
+              pl={padding || '2px'}
+              ml={margin || '1px'}
+              pr={'0'}
+              mr={'0'}
+              borderRight={'0px'}
+              bgColor={background || 'white'}
+              borderBottomRightRadius="0.5rem"
+              borderBottomLeftRadius="0"
+              borderTopLeftRadius="1rem"
+              borderTopRightRadius="0"
+              textAlign="justify"
+            >
               {({ isExpanded }) => (
                 <>
-                  <h2>
+                  <Text as="h2">
                     <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
+                      <Box
+                        as="span"
+                        flex="1"
+                        textAlign="justify"
+                        fontSize={'18px'}
+                        className="expanded-leaf"
+                      >
                         {field.name}
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
-                    <Box as="span" flex="1" textAlign="left" fontSize="sm">
+                    <Box as="span" flex="1" textAlign="justify" fontSize="sm">
                       {field.description}
                     </Box>
-                  </h2>
-                  <AccordionPanel pb={4} px={0}>
-                    {getTypes(field)}
-                    <Box mt={8}>
-                      <h3>Type details</h3>
-                      {isExpanded && <SchemaTree field={field} />}
-                    </Box>
+                  </Text>
+                  <AccordionPanel px={0} className="inner-expanded-leaf">
+                    {getTypes(field) === 'characters: Character' ? (
+                      <>
+                        {'*' + getTypes(field)}
+                        <Box mt={4}>
+                          <Text as="h3" mb={'5px'} fontSize={'18px'}>
+                            Type details
+                          </Text>
+                          {isExpanded && <SchemaTree field={field} margin='0' padding='2px' background={'ghostwhite'}/>}
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        {getTypes(field)}
+                        <Box mt={4}>
+                          <Text as="h3" mb={'5px'} fontSize={'18px'}>
+                            Type details
+                          </Text>
+                          {isExpanded && <SchemaTree field={field} margin='0' padding='2px'/>}
+                        </Box>
+                      </>
+                    )}
                     {!!field.args.length && (
-                      <Box mt={8}>
-                        <h3>Arguments</h3>
+                      <Box mt={4}>
+                        <Text as="h3">Arguments</Text>
                         <Accordion allowToggle>
                           {field.args.map((arg) => {
                             const argTypeName: string = getArgTypeName(arg).trim().endsWith('!')
@@ -142,23 +188,28 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                               <AccordionItem key={arg.name}>
                                 {({ isExpanded }) => (
                                   <>
-                                    <h2>
+                                    <Text as="h2">
                                       <AccordionButton>
-                                        <Box as="span" flex="1" textAlign="left">
+                                        <Box
+                                          as="span"
+                                          flex="1"
+                                          textAlign="justify"
+                                          className="inner-leaf"
+                                        >
                                           {arg.name + ': ' + getArgTypeName(arg)}
                                         </Box>
                                         <AccordionIcon />
                                       </AccordionButton>
-                                    </h2>
+                                    </Text>
                                     <AccordionPanel pb={4}>
                                       {isExpanded && typeForArg?.kind === 'SCALAR' && (
-                                        <Box as="span" flex="1" textAlign="left">
+                                        <Box as="span" flex="1" textAlign="justify">
                                           {typeForArg?.description}
                                         </Box>
                                       )}
                                       {isExpanded && typeForArg?.kind === 'INPUT_OBJECT' && (
                                         <Accordion allowToggle>
-                                          <h3>Type details</h3>
+                                          <Text as="h3">Type details</Text>
                                           {typeForArg.inputFields?.map((inputField) => {
                                             return (
                                               <AccordionItem key={inputField.name}>

@@ -107,10 +107,10 @@ export function EditorArea() {
       </GridItem>
       <GridItem colStart={2} colEnd={3}>
         <Box>
-          <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
+          <Button my={2} colorScheme={'purple'} bgColor={'#695bd3'} onClick={onSubmit}>
             <Icon as={HiPlay} />
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onDocLoadAndOpen}>
+          <Button my={2} colorScheme={'purple'} bgColor={'#695bd3'} onClick={onDocLoadAndOpen}>
             <Icon as={HiDocumentText} />
           </Button>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
@@ -119,7 +119,7 @@ export function EditorArea() {
               <DrawerCloseButton />
               <DrawerHeader>{t('docs')}</DrawerHeader>
 
-              <DrawerBody>
+              <DrawerBody px={'2%'}>
                 <Suspense
                   fallback={<SkeletonText mt="4" noOfLines={12} spacing="4" skeletonHeight="3" />}
                 >
