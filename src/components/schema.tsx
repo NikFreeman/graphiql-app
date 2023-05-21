@@ -159,7 +159,14 @@ function SchemaTree({ field, typeName, padding, margin, background }: DrawTreePr
                           <Text as="h3" mb={'5px'} fontSize={'18px'}>
                             Type details
                           </Text>
-                          {isExpanded && <SchemaTree field={field} margin='0' padding='2px' background={'ghostwhite'}/>}
+                          {isExpanded && (
+                            <SchemaTree
+                              field={field}
+                              margin="0"
+                              padding="2px"
+                              background={'ghostwhite'}
+                            />
+                          )}
                         </Box>
                       </>
                     ) : (
@@ -169,7 +176,7 @@ function SchemaTree({ field, typeName, padding, margin, background }: DrawTreePr
                           <Text as="h3" mb={'5px'} fontSize={'18px'}>
                             Type details
                           </Text>
-                          {isExpanded && <SchemaTree field={field} margin='0' padding='2px'/>}
+                          {isExpanded && <SchemaTree field={field} margin="0" padding="2px" />}
                         </Box>
                       </>
                     )}
