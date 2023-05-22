@@ -1,27 +1,36 @@
 import { auth } from '../utils/firebase';
-import { useDispatch } from 'react-redux';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from '../store/slices/userSlice';
+import { AuthError, createUserWithEmailAndPassword } from 'firebase/auth';
 import LoginForm from '../components/loginForm';
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 function SignUp() {
-  const dispatch = useDispatch();
+  const toast = useToast();
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  console.log('auth->', auth.currentUser);
+
   const handleSignUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        console.log('user->', user);
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
-          })
-        );
+        navigate('/editor');
+        toast({
+          description: `${user.email} is logged`,
+          position: 'top-right',
+          status: 'info',
+          isClosable: true,
+          duration: 3000,
+        });
       })
-      .catch(console.error);
+      .catch((err: AuthError) => {
+        toast({
+          description: err.message,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+          duration: 5000,
+        });
+      });
   };
   return (
     <LoginForm handleClick={handleSignUp} title={t('signUp')} btnTitle={t('signUp')}></LoginForm>
