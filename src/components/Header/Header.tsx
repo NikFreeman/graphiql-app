@@ -18,10 +18,15 @@ import { ToggleButton } from '../Buttons/ToggleButton';
 import './Header.css';
 import { useScrollPixels } from '../../hooks/scrollPixels';
 import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Loading from '../loading';
 
 export const Header = () => {
+  const { isAuth, loading } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
@@ -31,11 +36,14 @@ export const Header = () => {
   const headerHeight = 70;
 
   const scrollPixels = useScrollPixels();
-
-  const { isAuth } = useAuth();
-
-  if (!isSmallerThan600 && isModalOpen) setModalOpen(false);
-
+  const navigate = useNavigate();
+  const SignOut = () => {
+    signOut(auth);
+    navigate('/');
+  };
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <Fade in={scrollPixels > 300}>
@@ -66,7 +74,7 @@ export const Header = () => {
             <>
               <GridItem justifySelf={'start'}>
                 <ButtonGroup variant="ghost">
-                  <LinkButton label="GraphiQL" source="/" />
+                  <LinkButton label="GraphiQL" source="/editor" />
                 </ButtonGroup>
               </GridItem>
               <GridItem>
@@ -92,12 +100,8 @@ export const Header = () => {
                   {isAuth && (
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="/" />
-                        <ToggleButton
-                          label={t('signOut')}
-                          hasBorder={true}
-                          handler={() => console.log('Sign Out')}
-                        />
+                        <LinkButton label="Go to Main Page" source="/editor" />
+                        <ToggleButton label={t('signOut')} hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>
                   )}
@@ -155,12 +159,8 @@ export const Header = () => {
               {isAuth && (
                 <SlideFade in={isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label={t('goToMain')} source="/" width="100%" />
-                    <ToggleButton
-                      hasBorder={true}
-                      label={t('signOut')}
-                      handler={() => console.log('Sign Out')}
-                    />
+                    <LinkButton label={t('goToMain')} source="/editor" width="100%" />
+                    <ToggleButton hasBorder={true} label={t('signOut')} handler={SignOut} />
                   </Flex>
                 </SlideFade>
               )}

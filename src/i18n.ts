@@ -24,6 +24,10 @@ const resources = {
       fieldError: 'Error in the field "',
       emptyField: 'Empty query field',
       typeQuery: 'Type any query',
+      emailIsRequired: 'Email field is required',
+      emailIsInvalid: 'Email is Invalid',
+      passwordIsRequired: 'Password field is required',
+      passwordMin: 'Password must be at least 6 characters',
       nickInfo:
         'NikFreeman is a talented programmer who is passionate about creating innovative and efficient software solutions. With a keen eye for detail and a deep understanding of programming languages and frameworks, Nik brings a valuable skillset to any project. As a core member of the GraphiQL app development team, Nik is constantly working to ensure that the app is both user-friendly and high-performing.',
       bonusInfo:
@@ -59,6 +63,10 @@ const resources = {
       fieldError: 'Ошибка в поле "',
       emptyField: 'Пустое поле запроса',
       typeQuery: 'Введите какой-либо запрос',
+      emailIsRequired: 'Электронная почта обязательна',
+      emailIsInvalid: 'Электронная почта недействительна',
+      passwordIsRequired: 'Пароль обязателен',
+      passwordMin: 'Пароль должен быть не менее 6 символов',
       nickInfo:
         'NikFreeman — талантливый программист, полностью поглощенный созданием инновационных и эффективных программных продуктов. Обладая беспрецедентным вниманием к деталям и глубоким пониманием языков программирования и сред разработки, NikFreeman своим набором навыков способен сделать любой проект лучше. Как ключевой член команды разработчиков GraphiQL, NikFreeman неустанно работает над тем, чтобы приложение было удобным и высокопроизводительным.',
       bonusInfo:
