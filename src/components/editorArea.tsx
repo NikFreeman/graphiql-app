@@ -32,6 +32,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { makeRequest } from '../utils/request';
@@ -89,6 +90,7 @@ export function EditorArea() {
     onClose: onPopoverQueryClose,
   } = useDisclosure();
   const toast = useToast();
+  const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
 
   const onSubmit = async () => {
     const isVariablesValid = validationJSON(variables).isValid;
@@ -123,7 +125,11 @@ export function EditorArea() {
   const { t } = useTranslation();
 
   return (
-    <Grid gridTemplateColumns={'1fr 70px 1fr'} flexGrow={1}>
+    <Grid
+      gridTemplateColumns={isSmallerThan600 ? '1fr' : '1fr 70px 1fr'}
+      gridTemplateRows={isSmallerThan600 ? '70vh 70px 70vh' : '1fr'}
+      flexGrow={1}
+    >
       <GridItem
         display={'flex'}
         flexDir={'column'}
@@ -133,7 +139,11 @@ export function EditorArea() {
         gap={2}
         px={2}
       >
-        <Popover isOpen={isPopoverQueryOpen} onClose={onPopoverQueryClose} placement="right">
+        <Popover
+          isOpen={isPopoverQueryOpen}
+          onClose={onPopoverQueryClose}
+          placement={isSmallerThan600 ? 'bottom' : 'right'}
+        >
           <PopoverTrigger>
             <Textarea resize="none" height={'100%'} onChange={(e) => setRequest(e.target.value)} />
           </PopoverTrigger>
@@ -211,12 +221,12 @@ export function EditorArea() {
           </AccordionItem>
         </Accordion>
       </GridItem>
-      <GridItem colStart={2} colEnd={3}>
+      <GridItem colStart={isSmallerThan600 ? 1 : 2} rowStart={isSmallerThan600 ? 2 : 1}>
         <Box>
-          <Button my={2} colorScheme={'purple'} onClick={onSubmit}>
+          <Button m={2} colorScheme={'purple'} onClick={onSubmit}>
             <Icon as={HiPlay} />
           </Button>
-          <Button my={2} colorScheme={'purple'} onClick={onDocumentationOpen}>
+          <Button m={2} colorScheme={'purple'} onClick={onDocumentationOpen}>
             <Icon as={HiDocumentText} />
           </Button>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
@@ -236,7 +246,12 @@ export function EditorArea() {
           </Drawer>
         </Box>
       </GridItem>
-      <GridItem rowStart={1} colStart={3} colEnd={4} rowSpan={1} px={2}>
+      <GridItem
+        rowStart={isSmallerThan600 ? 3 : 1}
+        colStart={isSmallerThan600 ? 1 : 3}
+        rowSpan={1}
+        px={2}
+      >
         <Textarea readOnly resize="none" minHeight={'100%'} value={response} />
       </GridItem>
     </Grid>
