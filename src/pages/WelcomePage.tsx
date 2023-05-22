@@ -1,4 +1,4 @@
-import { Flex, Text, Image, useMediaQuery, Fade } from '@chakra-ui/react';
+import { Flex, Text, Image, useMediaQuery, Fade, Code } from '@chakra-ui/react';
 import nickImg from '../assets/images/profile-nick.png';
 import bonusImg from '../assets/images/profile-bonus.png';
 import rockImg from '../assets/images/profile-rock.png';
@@ -129,12 +129,40 @@ export const WelcomePage = () => {
         gap="1rem"
       >
         <Fade in={scrollPercentage > 63}>
-          <Text fontSize="6xl" color="white">
-            {t('projectInfoTitle')}
-          </Text>
-          <Text fontSize="xl" align="justify" color="white">
-            {t('projectInfo')}
-          </Text>
+          <Flex flexDir={'column'} gap={'1rem'}>
+            <Text fontSize="6xl" color="white">
+              {t('projectInfoTitle')}
+            </Text>
+            <Text fontSize="xl" align="justify" color="white">
+              {t('projectInfo')}
+            </Text>
+            <Text fontSize="xl" align="justify" color="white">
+              {t('trySnippet')}
+            </Text>
+            <Code
+              fontSize="xl"
+              textAlign={'initial'}
+              colorScheme="whiteAlpha"
+              display={'flex'}
+              justifySelf={'center'}
+              whiteSpace={'pre'}
+              p={'10px'}
+              justifyContent={'center'}
+              border={'solid'}
+              borderBottomRightRadius="0.5rem"
+              borderBottomLeftRadius="0"
+              borderTopLeftRadius="1rem"
+              borderTopRightRadius="0"
+              children="query go ($filter: FilterCharacter, $page: Int) {
+  characters(filter: $filter, page: $page) {
+    results {
+      name
+      status
+    }
+  }
+}"
+            />
+          </Flex>
         </Fade>
       </Flex>
       <Flex
