@@ -56,6 +56,8 @@ type ErrorType = {
 type Response = {
   data?: object;
   errors?: ErrorType[];
+  name?: string;
+  message?: string;
 };
 
 export function EditorArea() {
@@ -95,16 +97,14 @@ export function EditorArea() {
       onPopoverQueryOpen();
     } else if (isVariablesValid && isHeadersValid) {
       const resp: Response = await makeRequest(request, variables, headers);
-      if (resp.errors) {
-        resp.errors.forEach((error: ErrorType) => {
-          toast({
-            title: error.extensions.code,
-            description: error.message,
-            position: 'top-right',
-            status: 'error',
-            isClosable: true,
-            duration: 7000,
-          });
+      if (!resp.data && !resp.errors) {
+        toast({
+          title: resp.name,
+          description: resp.message,
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+          duration: 5000,
         });
       } else {
         setResponse(JSON.stringify(resp, null, 2));
