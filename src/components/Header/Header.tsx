@@ -52,7 +52,7 @@ export const Header = () => {
           px={isSmallerThan900 ? '5vw' : '15vw'}
           color="white"
           templateColumns={isSmallerThan600 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'}
-          gap={5}
+          gap={4}
           className="header-container"
           transition="0.3s"
           style={{
