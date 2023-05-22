@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   Box,
   SkeletonText,
+  Text,
 } from '@chakra-ui/react';
 
 import { getSchema } from '../helpers/variables';
@@ -65,12 +66,42 @@ function getArgTypeName(arg: Arg): string {
   }`;
 }
 
-function getTypes(field: Field): string {
-  return `${field.name}${field.args.length ? '(' : ''}${field.args.map(
-    (arg) => ' ' + arg.name + ': ' + getArgTypeName(arg)
-  )}${field.args.length ? '): ' : ': '}${field.type.kind === 'LIST' ? '[' : ''}${getTypeName(
-    field
-  )}${field.type.kind === 'LIST' ? ']' : ''}`;
+function GetTypes({ field }: DrawTreeProps) {
+  return (
+    <Box>
+      {field && (
+        <>
+          <Text as="span" color={'tomato'}>
+            {field.name}
+          </Text>
+          <Text as="span" color={'black'}>
+            {field.args.length ? '(' : ''}
+            {field.args.map((arg) => {
+              return (
+                <>
+                  <Text as="span" color={'darkblue'}>
+                    {' '}
+                    {arg.name}:{' '}
+                  </Text>
+                  <Text as="span" color={'orange'}>
+                    {getArgTypeName(arg)}
+                  </Text>
+                </>
+              );
+            })}
+            {field.args.length ? '): ' : ': '}
+          </Text>
+          <Text as="span" color={'black'}>
+            {field.type.kind === 'LIST' ? '[' : ''}
+            <Text as="span" color={'orange'}>
+              {getTypeName(field)}
+            </Text>
+            {field.type.kind === 'LIST' ? ']' : ''}
+          </Text>
+        </>
+      )}
+    </Box>
+  );
 }
 
 let schema: SchemaType;
@@ -93,7 +124,7 @@ export default function Schema() {
           <AccordionItem>
             <h2>
               <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+                <Box as="span" flex="1" textAlign="left" fontSize={'18px'}>
                   Query: {schema.types[0].name}
                 </Box>
                 <AccordionIcon />
@@ -103,6 +134,9 @@ export default function Schema() {
               </Box>
             </h2>
             <AccordionPanel pb={4} px={0}>
+              <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+                Queries
+              </Text>
               <SchemaTree typeName={schema.types[0].name} />
             </AccordionPanel>
           </AccordionItem>
@@ -136,21 +170,25 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
-                    <Box as="span" flex="1" textAlign="left" fontSize="sm">
+                    <Text as="span" flex="1" textAlign="left" fontSize="sm" color={'gray.500'}>
                       {field.description}
-                    </Box>
+                    </Text>
                   </h2>
                   <AccordionPanel pb={4} px={0}>
-                    {getTypes(field)}
+                    <GetTypes field={field} />
                     <Box mt={8}>
-                      <h3>Type details</h3>
+                      <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+                        Type details
+                      </Text>
                       {isExpanded && <SchemaTree field={field} />}
                     </Box>
                     {!!field.args.length && (
                       <Box mt={8}>
-                        <h3>Arguments</h3>
+                        <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+                          Arguments
+                        </Text>
                         <Accordion allowToggle>
-                          {field.args.map((arg) => {
+                          {field.args.map((arg: Arg) => {
                             const argTypeName: string = getArgTypeName(arg).trim().endsWith('!')
                               ? getArgTypeName(arg).trim().slice(0, -1)
                               : getArgTypeName(arg).trim();
@@ -164,20 +202,39 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                     <h2>
                                       <AccordionButton>
                                         <Box as="span" flex="1" textAlign="left">
-                                          {arg.name + ': ' + getArgTypeName(arg)}
+                                          <Text as="span" color={'tomato'}>
+                                            {' '}
+                                            {arg.name}:{' '}
+                                          </Text>
+                                          <Text as="span" color={'orange'}>
+                                            {getArgTypeName(arg)}
+                                          </Text>
+                                          {/* {arg.name + ': ' + getArgTypeName(arg)} */}
                                         </Box>
                                         <AccordionIcon />
                                       </AccordionButton>
                                     </h2>
                                     <AccordionPanel pb={4}>
                                       {isExpanded && typeForArg?.kind === 'SCALAR' && (
-                                        <Box as="span" flex="1" textAlign="left">
+                                        <Text
+                                          as="span"
+                                          my={'5px'}
+                                          fontSize={'16px'}
+                                          color={'gray.500'}
+                                        >
                                           {typeForArg?.description}
-                                        </Box>
+                                        </Text>
                                       )}
                                       {isExpanded && typeForArg?.kind === 'INPUT_OBJECT' && (
                                         <Accordion allowToggle>
-                                          <h3>Type details</h3>
+                                          <Text
+                                            as="h3"
+                                            mb={'5px'}
+                                            fontSize={'18px'}
+                                            color={'gray.400'}
+                                          >
+                                            Type details
+                                          </Text>
                                           {typeForArg.inputFields?.map((inputField) => {
                                             return (
                                               <AccordionItem key={inputField.name}>
@@ -185,6 +242,13 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                                   <>
                                                     <AccordionButton>
                                                       <Box as="span" flex="1" textAlign="left">
+                                                        {/* <Text as="span" color={'tomato'}>
+                                                          {' '}
+                                                          {inputField.name}:{' '}
+                                                        </Text>
+                                                        <Text as="span" color={'orange'}>
+                                                          {getArgTypeName(inputField)}
+                                                        </Text> */}
                                                         {inputField.name +
                                                           ': ' +
                                                           getArgTypeName(inputField)}
@@ -225,6 +289,10 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
       </Accordion>
     );
   } else if (type?.kind === 'SCALAR') {
-    return <div>{type.description}</div>;
+    return (
+      <Text as="span" my={'5px'} fontSize={'16px'} color={'gray.500'}>
+        {type.description}
+      </Text>
+    );
   } else return <></>;
 }
