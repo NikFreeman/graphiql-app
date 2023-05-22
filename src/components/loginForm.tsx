@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react';
 import { ToggleButton } from '../components/Buttons/ToggleButton';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface LoginFormProps {
   title: string;
@@ -28,17 +30,27 @@ function LoginForm(props: LoginFormProps) {
   const { t } = useTranslation();
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(t('emailIsRequired') as string)
+      .email(t('emailIsInvalid') as string),
+    password: Yup.string()
+      .required(t('passwordIsRequired') as string)
+      .min(6, t('passwordMin') as string),
+  });
+
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<FormInput>();
+  } = useForm<FormInput>({ resolver: yupResolver(validationSchema) });
 
   const handleClick = (data: FormInput) => {
     props.handleClick(data.email, data.password);
   };
+
   return (
-    <form onSubmit={handleSubmit(handleClick)}>
+    <form onSubmit={handleSubmit(handleClick)} className="form">
       <Flex
         minH={'100%'}
         flexGrow={'1'}
@@ -56,9 +68,8 @@ function LoginForm(props: LoginFormProps) {
         >
           <Stack align={'center'}>
             <Text as="h2" fontSize={'6xl'}>
-              {props.title}{' '}
+              {props.title}
             </Text>
-            <Text fontSize={'lg'} color={'gray.600'}></Text>
           </Stack>
           <Flex
             bg={colorModeValue('white', 'gray.700')}
@@ -72,23 +83,12 @@ function LoginForm(props: LoginFormProps) {
             <Stack spacing={4} w={'100%'}>
               <FormControl id="email" isInvalid={!!errors.email}>
                 <FormLabel>{t('email')}</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  placeholder="E-mail"
-                  {...register('email', { required: 'This is required' })}
-                />
+                <Input type="email" id="email" {...register('email')} />
                 <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
               </FormControl>
               <FormControl id="password" isInvalid={!!errors.password}>
                 <FormLabel>{t('password')}</FormLabel>
-                <Input
-                  type="password"
-                  {...register('password', {
-                    required: 'This is required',
-                    minLength: { value: 6, message: 'Minimum length should be 6' },
-                  })}
-                />
+                <Input type="password" {...register('password')} />
                 <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>

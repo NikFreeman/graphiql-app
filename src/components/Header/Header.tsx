@@ -23,9 +23,10 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Loading from '../loading';
 
 export const Header = () => {
-  const { isAuth } = useAuth();
+  const { isAuth, loading } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
@@ -40,7 +41,9 @@ export const Header = () => {
     signOut(auth);
     navigate('/');
   };
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <Fade in={scrollPixels > 300}>
