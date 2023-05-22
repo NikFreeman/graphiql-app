@@ -66,24 +66,31 @@ function getArgTypeName(arg: Arg): string {
   }`;
 }
 
+const TYPE_NAME_COLOR = 'tomato';
+const ARG_NAME_COLOR = 'darkblue';
+const ARG_TYPE_NAME_COLOR = 'orange';
+const BRACKETS_COLOR = 'black';
+const H3_COLOR = 'gray.400';
+const DESCRIPTION_COLOR = 'gray.500';
+
 function GetTypes({ field }: DrawTreeProps) {
   return (
     <Box>
       {field && (
         <>
-          <Text as="span" color={'tomato'}>
+          <Text as="span" color={TYPE_NAME_COLOR}>
             {field.name}
           </Text>
-          <Text as="span" color={'black'}>
+          <Text as="span" color={BRACKETS_COLOR}>
             {field.args.length ? '(' : ''}
             {field.args.map((arg) => {
               return (
                 <>
-                  <Text as="span" color={'darkblue'}>
+                  <Text as="span" color={ARG_NAME_COLOR}>
                     {' '}
                     {arg.name}:{' '}
                   </Text>
-                  <Text as="span" color={'orange'}>
+                  <Text as="span" color={ARG_TYPE_NAME_COLOR}>
                     {getArgTypeName(arg)}
                   </Text>
                 </>
@@ -91,9 +98,9 @@ function GetTypes({ field }: DrawTreeProps) {
             })}
             {field.args.length ? '): ' : ': '}
           </Text>
-          <Text as="span" color={'black'}>
+          <Text as="span" color={BRACKETS_COLOR}>
             {field.type.kind === 'LIST' ? '[' : ''}
-            <Text as="span" color={'orange'}>
+            <Text as="span" color={ARG_TYPE_NAME_COLOR}>
               {getTypeName(field)}
             </Text>
             {field.type.kind === 'LIST' ? ']' : ''}
@@ -134,7 +141,7 @@ export default function Schema() {
               </Box>
             </h2>
             <AccordionPanel pb={4} px={0}>
-              <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+              <Text as="h3" mb={'5px'} fontSize={'18px'} color={H3_COLOR}>
                 Queries
               </Text>
               <SchemaTree typeName={schema.types[0].name} />
@@ -170,21 +177,27 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
-                    <Text as="span" flex="1" textAlign="left" fontSize="sm" color={'gray.500'}>
+                    <Text
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      fontSize="sm"
+                      color={DESCRIPTION_COLOR}
+                    >
                       {field.description}
                     </Text>
                   </h2>
                   <AccordionPanel pb={4} px={0}>
                     <GetTypes field={field} />
                     <Box mt={8}>
-                      <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+                      <Text as="h3" mb={'5px'} fontSize={'18px'} color={H3_COLOR}>
                         Type details
                       </Text>
                       {isExpanded && <SchemaTree field={field} />}
                     </Box>
                     {!!field.args.length && (
                       <Box mt={8}>
-                        <Text as="h3" mb={'5px'} fontSize={'18px'} color={'gray.400'}>
+                        <Text as="h3" mb={'5px'} fontSize={'18px'} color={H3_COLOR}>
                           Arguments
                         </Text>
                         <Accordion allowToggle>
@@ -202,14 +215,13 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                     <h2>
                                       <AccordionButton>
                                         <Box as="span" flex="1" textAlign="left">
-                                          <Text as="span" color={'tomato'}>
+                                          <Text as="span" color={TYPE_NAME_COLOR}>
                                             {' '}
                                             {arg.name}:{' '}
                                           </Text>
-                                          <Text as="span" color={'orange'}>
+                                          <Text as="span" color={ARG_TYPE_NAME_COLOR}>
                                             {getArgTypeName(arg)}
                                           </Text>
-                                          {/* {arg.name + ': ' + getArgTypeName(arg)} */}
                                         </Box>
                                         <AccordionIcon />
                                       </AccordionButton>
@@ -220,7 +232,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                           as="span"
                                           my={'5px'}
                                           fontSize={'16px'}
-                                          color={'gray.500'}
+                                          color={DESCRIPTION_COLOR}
                                         >
                                           {typeForArg?.description}
                                         </Text>
@@ -231,7 +243,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                             as="h3"
                                             mb={'5px'}
                                             fontSize={'18px'}
-                                            color={'gray.400'}
+                                            color={H3_COLOR}
                                           >
                                             Type details
                                           </Text>
@@ -242,13 +254,6 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                                                   <>
                                                     <AccordionButton>
                                                       <Box as="span" flex="1" textAlign="left">
-                                                        {/* <Text as="span" color={'tomato'}>
-                                                          {' '}
-                                                          {inputField.name}:{' '}
-                                                        </Text>
-                                                        <Text as="span" color={'orange'}>
-                                                          {getArgTypeName(inputField)}
-                                                        </Text> */}
                                                         {inputField.name +
                                                           ': ' +
                                                           getArgTypeName(inputField)}
@@ -290,7 +295,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
     );
   } else if (type?.kind === 'SCALAR') {
     return (
-      <Text as="span" my={'5px'} fontSize={'16px'} color={'gray.500'}>
+      <Text as="span" my={'5px'} fontSize={'16px'} color={DESCRIPTION_COLOR}>
         {type.description}
       </Text>
     );
