@@ -21,6 +21,7 @@ export const ScrollTopButton = () => {
       border={'solid 1px'}
       transition={'0.3s'}
       bg={'#695bd3'}
+      zIndex={'5'}
       _hover={{ opacity: '0.85' }}
     >
       {t('up')}
