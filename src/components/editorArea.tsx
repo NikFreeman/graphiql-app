@@ -115,11 +115,11 @@ export function EditorArea() {
           </Button>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
             <DrawerOverlay />
-            <DrawerContent maxW={'lg'}>
+            <DrawerContent maxW={'lg'} pos={'relative'}>
               <DrawerCloseButton />
               <DrawerHeader>{t('docs')}</DrawerHeader>
 
-              <DrawerBody px={'2%'}>
+              <DrawerBody px={'2%'} pos={'relative'}>
                 <Suspense
                   fallback={<SkeletonText mt="4" noOfLines={12} spacing="4" skeletonHeight="3" />}
                 >

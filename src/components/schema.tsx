@@ -8,8 +8,6 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-//import { useState, useRef } from 'react';
-
 import { schema } from '../helpers/variables';
 
 type Arg = {
@@ -85,11 +83,11 @@ export default function Schema() {
             </Box>
             <AccordionIcon />
           </AccordionButton>
-          <Box as="span" flex="1" textAlign="left" fontSize="sm">
+          <Box as="span" flex="1" textAlign="left" fontSize="sm" pos={'relative'}>
             {schema.types[0].description}
           </Box>
         </Text>
-        <AccordionPanel pb={4} px={0}>
+        <AccordionPanel pb={4} px={0} pos={'relative'}>
           <SchemaTree typeName={schema.types[0].name} />
         </AccordionPanel>
       </AccordionItem>
@@ -108,6 +106,7 @@ interface DrawTreeProps {
 function SchemaTree({ field, typeName, padding, margin, background }: DrawTreeProps) {
   const fieldTypeName = typeName ? typeName : field && getTypeName(field);
   const type = schema.types.find((type) => type.name === fieldTypeName);
+
   if (type && type.fields) {
     return (
       <Accordion allowToggle className="accordion-tree">
@@ -116,9 +115,9 @@ function SchemaTree({ field, typeName, padding, margin, background }: DrawTreePr
             <AccordionItem
               key={field.name}
               className="accordion-leaf"
-              border={'solid 2px'}
-              borderColor={'gray.100'}
-              py={'6px'}
+              border={'solid 1px'}
+              borderColor={'gray.200'}
+              py={'5px'}
               my={'5px'}
               pl={padding || '2px'}
               ml={margin || '1px'}
@@ -131,6 +130,7 @@ function SchemaTree({ field, typeName, padding, margin, background }: DrawTreePr
               borderTopLeftRadius="1rem"
               borderTopRightRadius="0"
               textAlign="justify"
+              pos={'relative'}
             >
               {({ isExpanded }) => (
                 <>
