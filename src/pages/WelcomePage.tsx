@@ -11,6 +11,7 @@ export const WelcomePage = () => {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan700] = useMediaQuery('(max-width: 700px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+  const [isSmallerThan470] = useMediaQuery('(max-width: 470px)');
   const { t } = useTranslation();
 
   const scrollPercentage = useScrollPercentage();
@@ -27,7 +28,7 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Text fontSize="6xl">{t('developers')}</Text>
+        <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'}>{t('developers')}</Text>
         <Flex
           as={'article'}
           gap="3vw"
@@ -130,30 +131,32 @@ export const WelcomePage = () => {
       >
         <Fade in={scrollPercentage > 63}>
           <Flex flexDir={'column'} gap={'1rem'}>
-            <Text fontSize="6xl" color="white">
+            <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'} color="white">
               {t('projectInfoTitle')}
             </Text>
             <Text fontSize="xl" align="justify" color="white">
               {t('projectInfo')}
             </Text>
-            <Text fontSize="xl" align="justify" color="white">
-              {t('trySnippet')}
-            </Text>
-            <Code
-              fontSize="xl"
-              textAlign={'initial'}
-              colorScheme="whiteAlpha"
-              display={'flex'}
-              justifySelf={'center'}
-              whiteSpace={'pre'}
-              p={'10px'}
-              justifyContent={'center'}
-              border={'solid'}
-              borderBottomRightRadius="0.5rem"
-              borderBottomLeftRadius="0"
-              borderTopLeftRadius="1rem"
-              borderTopRightRadius="0"
-              children="query go ($filter: FilterCharacter, $page: Int) {
+            {!isSmallerThan470 && (
+              <>
+                <Text fontSize="xl" align="justify" color="white">
+                  {t('trySnippet')}
+                </Text>
+                <Code
+                  fontSize={isSmallerThan900 ? '14px' : '18px'}
+                  textAlign={'initial'}
+                  colorScheme="whiteAlpha"
+                  display={'flex'}
+                  justifySelf={'center'}
+                  whiteSpace={'pre'}
+                  p={'10px'}
+                  justifyContent={'center'}
+                  border={'solid'}
+                  borderBottomRightRadius="0.5rem"
+                  borderBottomLeftRadius="0"
+                  borderTopLeftRadius="1rem"
+                  borderTopRightRadius="0"
+                  children="query go ($filter: FilterCharacter, $page: Int) {
   characters(filter: $filter, page: $page) {
     results {
       name
@@ -161,7 +164,35 @@ export const WelcomePage = () => {
     }
   }
 }"
-            />
+                />
+                <Text fontSize="xl" align="justify" color="white">
+                  {t('variablesExample')}
+                </Text>
+
+                <Code
+                  fontSize={isSmallerThan900 ? '14px' : '18px'}
+                  textAlign={'initial'}
+                  colorScheme="whiteAlpha"
+                  display={'flex'}
+                  justifySelf={'center'}
+                  whiteSpace={'pre'}
+                  p={'10px'}
+                  justifyContent={'center'}
+                  border={'solid'}
+                  borderBottomRightRadius="0.5rem"
+                  borderBottomLeftRadius="0"
+                  borderTopLeftRadius="1rem"
+                  borderTopRightRadius="0"
+                  children='{
+  "filter": {
+    "name": "Mr.",
+    "status": "Alive"
+  },
+  "page": 1
+}'
+                />
+              </>
+            )}
           </Flex>
         </Fade>
       </Flex>
@@ -176,7 +207,7 @@ export const WelcomePage = () => {
         gap="1rem"
       >
         <Fade in={scrollPercentage > 83}>
-          <Text fontSize="6xl">{t('courseInfoTitle')}</Text>
+          <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'}>{t('courseInfoTitle')}</Text>
           <Text fontSize="xl" align="justify">
             {t('courseInfo')}
           </Text>

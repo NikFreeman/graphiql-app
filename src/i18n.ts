@@ -38,6 +38,8 @@ const resources = {
       courseInfo:
         'The Rolling Scopes School offers a comprehensive course on React, covering topics such as JSX, class and functional components, virtual DOM, React hooks, Redux, and more. The course provides a strong foundation in React and web development, with hands-on projects and real-world scenarios designed to help students build practical skills. With experienced instructors and a supportive community, the Rolling Scopes React course is an excellent starting point for anyone looking to learn this popular JavaScript library.',
       trySnippet: 'Please, try this code snippet in the Editor and see the result.',
+      variablesExample:
+        'Oh! I almost forgot! Here is a Variables input example, if you are curious.',
     },
   },
   ru: {
@@ -75,6 +77,7 @@ const resources = {
       courseInfo:
         'Школа Rolling Scopes предлагает углубленный, комплексный курс по React, охватывающий такие темы, как JSX, классовые и функциональные компоненты, виртуальный DOM, хуки React, Redux и многое другое. Данный курс может предоставить фундаментальные знания в области React и веб-разработки, а также познакомить с проектами и реальными сценариями с целью помочь студентам приобрести практические навыки. Благодаря опытным менторам и поддерживающему, активному сообществу курс Rolling Scopes React станет отличной отправной точкой для всех, кто хочет изучить эту популярную библиотеку JavaScript.',
       trySnippet: 'Попробуйте использовать представленный ниже код на странице редактора запросов.',
+      variablesExample: 'Чуть не забыл! Куда же мы без примера кода для блока переменных.',
     },
   },
 };
