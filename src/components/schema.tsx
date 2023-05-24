@@ -71,8 +71,8 @@ const TYPE_NAME_COLOR = 'tomato';
 const ARG_NAME_COLOR = 'darkblue';
 const ARG_TYPE_NAME_COLOR = 'orange';
 const BRACKETS_COLOR = 'black';
-const H3_COLOR = 'gray.400';
-const DESCRIPTION_COLOR = 'gray.500';
+const H3_COLOR = 'gray.800';
+const DESCRIPTION_COLOR = '#000000d6';
 
 function GetTypes({ field }: DrawTreeProps) {
   return (
@@ -192,7 +192,7 @@ function SchemaTree({ field, typeName }: DrawTreeProps) {
                   <Text as="h2">
                     <AccordionButton>
                       <Box as="span" flex="1" textAlign="justify">
-                        {field.name}
+                        <Text fontWeight={500}> {field.name}</Text>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
