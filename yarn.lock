@@ -3721,6 +3721,13 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-error-boundary@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.4.tgz#d2e84505b0a67cec7a6bf33b0146faadfe31597d"
+  integrity sha512-AbqMFx8bCsob8rCHZvJYQ42MQijK0/034RUvan9qrqyJCpazr8d9vKHrysbxcr6odoHLZvQEcYomFPoIqH9fow==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 react-fast-compare@3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.1.tgz"
@@ -3830,11 +3837,6 @@ react-style-singleton@^2.2.1:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^2.0.0"
-
-react-use-error-boundary@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-use-error-boundary/-/react-use-error-boundary-3.0.0.tgz#c5b44acf9ab376f59a219d740ac372b05aba6240"
-  integrity sha512-5urkfyU3ZzInEMSHe1gxtDzlQAHs0krTt0V6h8H2L5nXhDKq3OYXnCs9lGHDkEkYvLmsphw8ap5g8uYfvrkJng==
 
 react@^18.2.0:
   version "18.2.0"
