@@ -3,9 +3,9 @@ import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Suspense, lazy } from 'react';
 import Loading from './components/loading';
-import { Provider } from 'react-redux';
-import { store } from './store';
 import theme from './style/CustomTheme';
+import { ErrorBoundary } from './utils/errorBoundary';
+import { ErrorBoundaryContext } from 'react-use-error-boundary';
 
 const Router = lazy(() => import('./routes/route'));
 
@@ -15,9 +15,11 @@ function App() {
       <ChakraProvider theme={theme}>
         <Suspense fallback={<Loading />}>
           <BrowserRouter>
-            <Provider store={store}>
-              <Router />
-            </Provider>
+            <ErrorBoundaryContext>
+              <ErrorBoundary>
+                <Router />
+              </ErrorBoundary>
+            </ErrorBoundaryContext>
           </BrowserRouter>
         </Suspense>
       </ChakraProvider>
