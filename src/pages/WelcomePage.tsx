@@ -44,7 +44,7 @@ export const WelcomePage = () => {
           {!isSmallerThan700 && (
             <Image
               src={nickImg}
-              alt="Bonus156 Photo"
+              alt="NikFreeman Photo"
               w="250px"
               h="250px"
               alignSelf="center"
@@ -99,7 +99,7 @@ export const WelcomePage = () => {
           {!isSmallerThan700 && (
             <Image
               src={rockImg}
-              alt="Bonus156 Photo"
+              alt="Rockmonolit Photo"
               w="250px"
               h="250px"
               alignSelf="center"
