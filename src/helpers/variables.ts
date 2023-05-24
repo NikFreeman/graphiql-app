@@ -7,6 +7,6 @@ const query =
 export let schema: SchemaType;
 
 export async function getSchema() {
-  schema = await makeRequest(query, {}).then((res) => res.data.__schema);
+  schema = await makeRequest(query, '').then((res) => res.data.__schema);
   return schema;
 }
