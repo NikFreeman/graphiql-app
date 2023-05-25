@@ -33,13 +33,16 @@ function LoginForm(props: LoginFormProps) {
 
   const textBoxHeightShift = '-96px';
 
+  const regExp = new RegExp('(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])[\\w!@#$%^&*]{8,}', 'gi');
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required(t('emailIsRequired') as string)
       .email(t('emailIsInvalid') as string),
     password: Yup.string()
       .required(t('passwordIsRequired') as string)
-      .min(6, t('passwordMin') as string),
+      .min(8, t('passwordMin') as string)
+      .matches(regExp, t('passwordStrength') as string),
   });
 
   const {
