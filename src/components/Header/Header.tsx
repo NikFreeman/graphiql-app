@@ -61,12 +61,12 @@ export const Header = () => {
         <Grid
           h={
             scrollPixels > headerHeight && !isShorterThan500
-              ? '115px'
+              ? '90px'
               : scrollPixels <= headerHeight && !isShorterThan500
               ? '100px'
               : scrollPixels > headerHeight && isShorterThan500
-              ? '80px'
-              : '75px'
+              ? '75px'
+              : '80px'
           }
           minH="75px"
           py="1rem"
