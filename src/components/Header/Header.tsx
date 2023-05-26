@@ -54,8 +54,8 @@ export const Header = () => {
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
-          h={scrollPixels > headerHeight ? '115px' : '100px'}
-          minH="100px"
+          h={scrollPixels > headerHeight ? '80px' : '100px'}
+          minH="80px"
           py="1rem"
           px={isSmallerThan900 ? '5vw' : '15vw'}
           color="white"

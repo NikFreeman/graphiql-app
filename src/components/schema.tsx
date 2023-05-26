@@ -7,6 +7,7 @@ import {
   Box,
   SkeletonText,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 
 import { getSchema } from '../helpers/variables';
@@ -116,15 +117,28 @@ let schema: SchemaType;
 
 export default function Schema() {
   const [isSchemaLoaded, setIsSchemaLoaded] = useState(false);
+  const toast = useToast();
   useEffect(() => {
     async function loadDoc() {
       if (!schema) {
-        schema = await getSchema().then((res) => res);
+        const tryGetSchema = await getSchema().then((res) => res);
+        if (tryGetSchema && !(tryGetSchema instanceof Error)) {
+          schema = tryGetSchema;
+        } else if (tryGetSchema) {
+          toast({
+            title: tryGetSchema.name,
+            description: tryGetSchema.message,
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+            duration: 5000,
+          });
+        }
       }
       setIsSchemaLoaded(!!schema);
     }
     loadDoc();
-  }, []);
+  }, [toast]);
   const { t } = useTranslation();
   return (
     <>
