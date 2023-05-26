@@ -31,7 +31,8 @@ const resources = {
       emailIsRequired: 'Email field is required',
       emailIsInvalid: 'Email is Invalid',
       passwordIsRequired: 'Password field is required',
-      passwordMin: 'Password must be at least 6 characters',
+      passwordMin: 'Password must be at least 8 characters',
+      passwordStrength: 'Password must be at least one letter, one digit, one special character',
       nickInfo:
         'NikFreeman is a talented programmer who is passionate about creating innovative and efficient software solutions. With a keen eye for detail and a deep understanding of programming languages and frameworks, Nik brings a valuable skillset to any project. As a core member of the GraphiQL app development team, Nik is constantly working to ensure that the app is both user-friendly and high-performing.',
       bonusInfo:
@@ -44,6 +45,9 @@ const resources = {
       courseInfoTitle: 'Information about the course',
       courseInfo:
         'The Rolling Scopes School offers a comprehensive course on React, covering topics such as JSX, class and functional components, virtual DOM, React hooks, Redux, and more. The course provides a strong foundation in React and web development, with hands-on projects and real-world scenarios designed to help students build practical skills. With experienced instructors and a supportive community, the Rolling Scopes React course is an excellent starting point for anyone looking to learn this popular JavaScript library.',
+      trySnippet: 'Please, try this code snippet in the Editor and see the result.',
+      variablesExample:
+        'Oh! I almost forgot! Here is a Variables input example, if you are curious.',
     },
   },
   ru: {
@@ -74,7 +78,9 @@ const resources = {
       emailIsRequired: 'Электронная почта обязательна',
       emailIsInvalid: 'Электронная почта недействительна',
       passwordIsRequired: 'Пароль обязателен',
-      passwordMin: 'Пароль должен быть не менее 6 символов',
+      passwordMin: 'Пароль должен быть не менее 8 символов',
+      passwordStrength:
+        'Пароль должен состоять как минимум из одной буквы, одной цифры, одного специального символа',
       nickInfo:
         'NikFreeman — талантливый программист, полностью поглощенный созданием инновационных и эффективных программных продуктов. Обладая беспрецедентным вниманием к деталям и глубоким пониманием языков программирования и сред разработки, NikFreeman своим набором навыков способен сделать любой проект лучше. Как ключевой член команды разработчиков GraphiQL, NikFreeman неустанно работает над тем, чтобы приложение было удобным и высокопроизводительным.',
       bonusInfo:
@@ -87,6 +93,8 @@ const resources = {
       courseInfoTitle: 'Сведения о курсе',
       courseInfo:
         'Школа Rolling Scopes предлагает углубленный, комплексный курс по React, охватывающий такие темы, как JSX, классовые и функциональные компоненты, виртуальный DOM, хуки React, Redux и многое другое. Данный курс может предоставить фундаментальные знания в области React и веб-разработки, а также познакомить с проектами и реальными сценариями с целью помочь студентам приобрести практические навыки. Благодаря опытным менторам и поддерживающему, активному сообществу курс Rolling Scopes React станет отличной отправной точкой для всех, кто хочет изучить эту популярную библиотеку JavaScript.',
+      trySnippet: 'Попробуйте использовать представленный ниже код на странице редактора запросов.',
+      variablesExample: 'Чуть не забыл! Куда же мы без примера кода для блока переменных.',
     },
   },
 };

@@ -50,7 +50,7 @@ export const Header = () => {
         <ScrollTopButton />
       </Fade>
       <Flex h="60px" bg="#695bd3" w="100%" minH="60px" justify="center" align="center">
-        <Text fontSize={isSmallerThan900 ? '2xl' : '4xl'}>{t('graphiqlBy')}</Text>
+        <Text fontSize={isSmallerThan900 ? 'xl' : '4xl'}>{t('graphiqlBy')}</Text>
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
@@ -60,7 +60,7 @@ export const Header = () => {
           px={isSmallerThan900 ? '5vw' : '15vw'}
           color="white"
           templateColumns={isSmallerThan600 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'}
-          gap={5}
+          gap={4}
           className="header-container"
           transition="0.3s"
           style={{
@@ -100,7 +100,7 @@ export const Header = () => {
                   {isAuth && (
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="/editor" />
+                        <LinkButton label={t('goToMain')} source="/editor" />
                         <ToggleButton label={t('signOut')} hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>

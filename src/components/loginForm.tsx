@@ -29,6 +29,11 @@ interface FormInput {
 function LoginForm(props: LoginFormProps) {
   const { t } = useTranslation();
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+  const [isShorterThan950] = useMediaQuery('(max-height: 950px)');
+
+  const textBoxHeightShift = '-96px';
+
+  const regExp = new RegExp('(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])[\\w!@#$%^&*]{8,}', 'gi');
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -36,7 +41,8 @@ function LoginForm(props: LoginFormProps) {
       .email(t('emailIsInvalid') as string),
     password: Yup.string()
       .required(t('passwordIsRequired') as string)
-      .min(6, t('passwordMin') as string),
+      .min(8, t('passwordMin') as string)
+      .matches(regExp, t('passwordStrength') as string),
   });
 
   const {
@@ -54,20 +60,22 @@ function LoginForm(props: LoginFormProps) {
       <Flex
         minH={'100%'}
         flexGrow={'1'}
-        align={'center'}
         justify={'center'}
         bg={colorModeValue('gray.50', 'gray.500')}
       >
         <Stack
-          spacing={8}
+          spacing={isSmallerThan600 ? 4 : 8}
           mx={'auto'}
           maxW={'lg'}
-          py={12}
+          py={isShorterThan950 ? 6 : 12}
           px={6}
           w={isSmallerThan600 ? '90%' : '500px'}
+          top={isShorterThan950 ? '0' : textBoxHeightShift}
+          justifyContent={'center'}
+          pos={'relative'}
         >
           <Stack align={'center'}>
-            <Text as="h2" fontSize={'6xl'}>
+            <Text as="h2" fontSize={isSmallerThan600 ? '4xl' : '6xl'}>
               {props.title}
             </Text>
           </Stack>
