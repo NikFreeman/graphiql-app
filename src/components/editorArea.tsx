@@ -33,6 +33,7 @@ import {
   PopoverTrigger,
   useToast,
   useMediaQuery,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import { HiDocumentText, HiPlay } from 'react-icons/hi2';
 import { makeRequest } from '../utils/request';
@@ -223,12 +224,17 @@ export function EditorArea() {
       </GridItem>
       <GridItem colStart={isSmallerThan600 ? 1 : 2} rowStart={isSmallerThan600 ? 2 : 1}>
         <Box>
-          <Button m={2} colorScheme={'purple'} bg={'#695bd3'} onClick={onSubmit}>
-            <Icon as={HiPlay} />
-          </Button>
-          <Button m={2} colorScheme={'purple'} bg={'#695bd3'} onClick={onDocumentationOpen}>
-            <Icon as={HiDocumentText} />
-          </Button>
+          <ButtonGroup
+            pt={isSmallerThan600 ? '8px' : '0'}
+            orientation={isSmallerThan600 ? 'horizontal' : 'vertical'}
+          >
+            <Button m={2} colorScheme={'purple'} bg={'#695bd3'} onClick={onSubmit}>
+              <Icon as={HiPlay} />
+            </Button>
+            <Button m={2} colorScheme={'purple'} bg={'#695bd3'} onClick={onDocumentationOpen}>
+              <Icon as={HiDocumentText} />
+            </Button>
+          </ButtonGroup>
           <Drawer isOpen={isDocumentationOpen} placement="left" onClose={onDocumentationClose}>
             <DrawerOverlay />
             <DrawerContent maxW={'lg'}>
