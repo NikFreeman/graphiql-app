@@ -123,7 +123,7 @@ export default function Schema() {
       if (!schema) {
         const tryGetSchema = await getSchema().then((res) => res);
         if (tryGetSchema && !(tryGetSchema instanceof Error)) {
-          schema = tryGetSchema;
+          schema = tryGetSchema.data.__schema;
         } else if (tryGetSchema) {
           toast({
             title: tryGetSchema.name,
