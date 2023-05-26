@@ -129,7 +129,7 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Fade in={scrollPercentage > 63}>
+        <Fade in={scrollPercentage > 55}>
           <Flex flexDir={'column'} gap={'1rem'}>
             <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'} color="white">
               {t('projectInfoTitle')}
@@ -206,7 +206,7 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Fade in={scrollPercentage > 83}>
+        <Fade in={scrollPercentage > 81}>
           <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'}>{t('courseInfoTitle')}</Text>
           <Text fontSize="xl" align="justify">
             {t('courseInfo')}

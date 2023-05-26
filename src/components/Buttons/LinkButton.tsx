@@ -29,6 +29,7 @@ export const LinkButton = (props: ButtonProps) => {
       border={'solid 1px'}
       opacity="0.9"
       pt={'7px'}
+      fontWeight={'700'}
       minWidth={'max-content'}
       transition={'border-color 0.25s'}
       _hover={{ opacity: '1', borderColor: '#695bd3' }}
