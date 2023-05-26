@@ -4,11 +4,12 @@ import './Footer.css';
 export const Footer = () => {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan400] = useMediaQuery('(max-width: 400px)');
+  const [isShorterThan500] = useMediaQuery('(max-height: 500px)');
   return (
     <Flex
       as="footer"
       bg="black"
-      h="100px"
+      h={isShorterThan500 ? '75px' : '100px'}
       justifyContent={'space-around'}
       px={isSmallerThan900 ? '5vw' : '15vw'}
     >
