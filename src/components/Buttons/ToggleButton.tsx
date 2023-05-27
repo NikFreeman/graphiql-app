@@ -20,6 +20,7 @@ export const ToggleButton = (props: ButtonProps) => {
       type={props.type || 'button'}
       minW="80px"
       h={'40px'}
+      fontWeight={'700'}
       isLoading={props.isLoading}
       borderColor={props.color || 'white'}
       border={props.hasBorder ? 'solid 1px' : 'solid 1px transparent'}
