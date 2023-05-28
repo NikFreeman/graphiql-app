@@ -5,14 +5,14 @@ import Loading from './loading';
 interface ProtectedRouteProps {
   children: JSX.Element;
 }
-function ProtectedRoute({ children }: ProtectedRouteProps) {
+function DefaultAuthRoute({ children }: ProtectedRouteProps) {
   const { isAuth, loading } = useAuth();
   if (loading) {
     return <Loading />;
   }
-  if (isAuth) {
+  if (!isAuth) {
     return children;
   }
-  return <Navigate to="/" replace />;
+  return <Navigate to="/editor" replace />;
 }
-export default ProtectedRoute;
+export default DefaultAuthRoute;

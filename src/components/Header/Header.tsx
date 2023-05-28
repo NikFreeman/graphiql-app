@@ -21,7 +21,7 @@ import { ScrollTopButton } from '../../components/Buttons/ScrollTopButton';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Loading from '../loading';
 
@@ -30,10 +30,13 @@ export const Header = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)');
+  const [isShorterThan500] = useMediaQuery('(max-height: 500px)');
   const { t, i18n } = useTranslation();
   const { onToggle } = useDisclosure();
 
   const headerHeight = 70;
+
+  const location = useLocation();
 
   const scrollPixels = useScrollPixels();
   const navigate = useNavigate();
@@ -41,26 +44,36 @@ export const Header = () => {
     signOut(auth);
     navigate('/');
   };
+
   if (loading) {
     return <Loading />;
   }
+
   return (
     <>
       <Fade in={scrollPixels > 300}>
         <ScrollTopButton />
       </Fade>
       <Flex h="60px" bg="#695bd3" w="100%" minH="60px" justify="center" align="center">
-        <Text fontSize={isSmallerThan900 ? '2xl' : '4xl'}>{t('graphiqlBy')}</Text>
+        <Text fontSize={isSmallerThan900 ? 'xl' : '4xl'}>{t('graphiqlBy')}</Text>
       </Flex>
       <Flex as="header" bg="black" flexDir="column" pos={'sticky'} top={'0'} zIndex={'2'}>
         <Grid
-          h={scrollPixels > headerHeight ? '115px' : '100px'}
-          minH="100px"
+          h={
+            scrollPixels > headerHeight && !isShorterThan500
+              ? '90px'
+              : scrollPixels <= headerHeight && !isShorterThan500
+              ? '100px'
+              : scrollPixels > headerHeight && isShorterThan500
+              ? '75px'
+              : '80px'
+          }
+          minH="75px"
           py="1rem"
           px={isSmallerThan900 ? '5vw' : '15vw'}
           color="white"
-          templateColumns={isSmallerThan600 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'}
-          gap={5}
+          templateColumns={'repeat(2, 1fr)'}
+          gap={4}
           className="header-container"
           transition="0.3s"
           style={{
@@ -73,34 +86,39 @@ export const Header = () => {
           {!isSmallerThan600 && (
             <>
               <GridItem justifySelf={'start'}>
-                <ButtonGroup variant="ghost">
-                  <LinkButton label="GraphiQL" source="/editor" />
-                </ButtonGroup>
-              </GridItem>
-              <GridItem>
-                <Text fontSize="2xl" color="white">
-                  {t('welcome')}
-                </Text>
+                {location.pathname === '/' && (
+                  <Text fontSize="2xl" color="white">
+                    {t('welcome')}
+                  </Text>
+                )}
+                {location.pathname !== '/' && (
+                  <ButtonGroup variant="ghost">
+                    <LinkButton label="GraphiQL" source="/" />
+                  </ButtonGroup>
+                )}
               </GridItem>
               <GridItem justifySelf={'end'}>
                 <ButtonGroup variant="ghost">
                   <ToggleButton
                     label={t('lang')}
+                    testid="switch"
                     hasBorder={false}
                     handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
                   />
                   {!isAuth && (
                     <SlideFade in={!isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label={t('signIn')} source="/sign-in" />
-                        <LinkButton label={t('signUp')} source="/sign-up" />
+                        <LinkButton label={t('signIn')} testid="sign-in" source="/sign-in" />
+                        <LinkButton label={t('signUp')} testid="sign-up" source="/sign-up" />
                       </ButtonGroup>
                     </SlideFade>
                   )}
                   {isAuth && (
                     <SlideFade in={isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label="Go to Main Page" source="/editor" />
+                        {location.pathname !== '/editor' && (
+                          <LinkButton label={t('goToMain')} source="/editor" />
+                        )}
                         <ToggleButton label={t('signOut')} hasBorder={true} handler={SignOut} />
                       </ButtonGroup>
                     </SlideFade>
@@ -112,9 +130,16 @@ export const Header = () => {
           {isSmallerThan600 && (
             <>
               <GridItem justifySelf={'start'}>
-                <Text fontSize="2xl" color="white">
-                  {t('welcome')}
-                </Text>
+                {location.pathname === '/' && (
+                  <Text fontSize="2xl" color="white">
+                    {t('welcome')}
+                  </Text>
+                )}
+                {location.pathname !== '/' && (
+                  <ButtonGroup variant="ghost">
+                    <LinkButton label="GraphiQL" source="/" />
+                  </ButtonGroup>
+                )}
               </GridItem>
               <GridItem justifySelf={'end'}>
                 <IconButton
@@ -159,7 +184,9 @@ export const Header = () => {
               {isAuth && (
                 <SlideFade in={isAuth}>
                   <Flex flexDir={'column'} gap={'1rem'}>
-                    <LinkButton label={t('goToMain')} source="/editor" width="100%" />
+                    {location.pathname !== '/editor' && (
+                      <LinkButton label={t('goToMain')} source="/editor" width="100%" />
+                    )}
                     <ToggleButton hasBorder={true} label={t('signOut')} handler={SignOut} />
                   </Flex>
                 </SlideFade>

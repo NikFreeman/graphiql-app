@@ -1,23 +1,15 @@
-import {
-  Flex,
-  Box,
-  Text,
-  Link,
-  Image,
-  Grid,
-  GridItem,
-  Show,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import { Flex, Box, Text, Link, Image, Grid, GridItem, useMediaQuery } from '@chakra-ui/react';
 import './Footer.css';
 
 export const Footer = () => {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
+  const [isSmallerThan400] = useMediaQuery('(max-width: 400px)');
+  const [isShorterThan500] = useMediaQuery('(max-height: 500px)');
   return (
     <Flex
       as="footer"
       bg="black"
-      h="100px"
+      h={isShorterThan500 ? '75px' : '100px'}
       justifyContent={'space-around'}
       px={isSmallerThan900 ? '5vw' : '15vw'}
     >
@@ -25,7 +17,7 @@ export const Footer = () => {
         color="white"
         templateColumns="repeat(3, 1fr)"
         w={'100%'}
-        gap={5}
+        gap={isSmallerThan400 ? 1 : 5}
         className="footer-container"
       >
         <GridItem justifySelf={'start'}>
@@ -40,11 +32,11 @@ export const Footer = () => {
           </Box>
         </GridItem>
         <GridItem>
-          <Show breakpoint="(min-width: 400px)">
+          {!isSmallerThan400 && (
             <Text fontSize="24px" color="white" opacity="0.9">
               2023
             </Text>
-          </Show>
+          )}
         </GridItem>
         <GridItem justifySelf={'end'}>
           <Flex flexDirection="column">

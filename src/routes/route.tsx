@@ -7,6 +7,7 @@ import { WelcomePage } from '../pages/WelcomePage';
 import { Header } from '../components/Header/Header';
 import { Footer } from '../components/Footer/Footer';
 import ProtectedRoute from '../components/protectedRoute';
+import DefaultAuthRoute from '../components/defaultAuthRoute';
 
 function Router() {
   return (
@@ -22,8 +23,22 @@ function Router() {
             </ProtectedRoute>
           }
         />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="sign-up" element={<SignUp />} />
+        <Route
+          path="sign-in"
+          element={
+            <DefaultAuthRoute>
+              <SignIn />
+            </DefaultAuthRoute>
+          }
+        />
+        <Route
+          path="sign-up"
+          element={
+            <DefaultAuthRoute>
+              <SignUp />
+            </DefaultAuthRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
