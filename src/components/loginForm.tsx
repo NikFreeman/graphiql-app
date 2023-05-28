@@ -108,6 +108,7 @@ function LoginForm(props: LoginFormProps) {
                 <ToggleButton
                   color="black"
                   type="submit"
+                  testid="submit"
                   isLoading={isSubmitting}
                   hasBorder={true}
                   label={props.btnTitle}
