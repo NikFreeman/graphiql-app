@@ -74,7 +74,7 @@ function LoginForm(props: LoginFormProps) {
           justifyContent={'center'}
           pos={'relative'}
         >
-          <Stack align={'center'}>
+          <Stack align={'center'} data-testid="login-form">
             <Text as="h2" fontSize={isSmallerThan600 ? '4xl' : '6xl'}>
               {props.title}
             </Text>
@@ -91,12 +91,12 @@ function LoginForm(props: LoginFormProps) {
             <Stack spacing={4} w={'100%'}>
               <FormControl id="email" isInvalid={!!errors.email}>
                 <FormLabel>{t('email')}</FormLabel>
-                <Input type="email" id="email" {...register('email')} />
+                <Input data-testid="email-input" type="email" id="email" {...register('email')} />
                 <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
               </FormControl>
               <FormControl id="password" isInvalid={!!errors.password}>
                 <FormLabel>{t('password')}</FormLabel>
-                <Input type="password" {...register('password')} />
+                <Input data-testid="password-input" type="password" {...register('password')} />
                 <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>

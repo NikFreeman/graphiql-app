@@ -101,14 +101,15 @@ export const Header = () => {
                 <ButtonGroup variant="ghost">
                   <ToggleButton
                     label={t('lang')}
+                    testid="switch"
                     hasBorder={false}
                     handler={() => i18n.changeLanguage(t('lang') === 'ENG' ? 'ru' : 'en')}
                   />
                   {!isAuth && (
                     <SlideFade in={!isAuth}>
                       <ButtonGroup variant="ghost">
-                        <LinkButton label={t('signIn')} source="/sign-in" />
-                        <LinkButton label={t('signUp')} source="/sign-up" />
+                        <LinkButton label={t('signIn')} testid="sign-in" source="/sign-in" />
+                        <LinkButton label={t('signUp')} testid="sign-up" source="/sign-up" />
                       </ButtonGroup>
                     </SlideFade>
                   )}

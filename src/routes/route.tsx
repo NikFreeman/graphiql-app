@@ -14,14 +14,7 @@ function Router() {
     <>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <DefaultAuthRoute>
-              <WelcomePage />
-            </DefaultAuthRoute>
-          }
-        />
+        <Route path="/" element={<WelcomePage />} />
         <Route
           path="editor"
           element={

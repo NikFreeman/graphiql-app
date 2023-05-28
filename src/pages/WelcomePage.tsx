@@ -17,7 +17,13 @@ export const WelcomePage = () => {
   const scrollPercentage = useScrollPercentage();
 
   return (
-    <Flex className="welcome-container" flexDirection="column" flexGrow="1" align="center">
+    <Flex
+      data-testid="welcome-page"
+      className="welcome-container"
+      flexDirection="column"
+      flexGrow="1"
+      align="center"
+    >
       <Flex
         as={'section'}
         bg="#695bd3"
@@ -28,7 +34,9 @@ export const WelcomePage = () => {
         py="5vh"
         gap="1rem"
       >
-        <Text fontSize={isSmallerThan600 ? '4xl' : '6xl'}>{t('developers')}</Text>
+        <Text data-testid="developers" fontSize={isSmallerThan600 ? '4xl' : '6xl'}>
+          {t('developers')}
+        </Text>
         <Flex
           as={'article'}
           gap="3vw"
