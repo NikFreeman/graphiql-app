@@ -45,7 +45,7 @@ describe('Welcome page', () => {
     cy.url().should('include', '/sign-in');
   });
 
-  it.only('should open the registration form when clicking on the sign-up button', () => {
+  it('should open the registration form when clicking on the sign-up button', () => {
     cy.visit('/');
 
     cy.findByTestId('sign-up').click();
