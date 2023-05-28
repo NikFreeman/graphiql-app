@@ -140,11 +140,7 @@ export function EditorArea() {
         gap={2}
         px={2}
       >
-        <Popover
-          isOpen={isPopoverQueryOpen}
-          onClose={onPopoverQueryClose}
-          placement={isSmallerThan600 ? 'bottom' : 'right'}
-        >
+        <Popover isOpen={isPopoverQueryOpen} onClose={onPopoverQueryClose} placement={'bottom'}>
           <PopoverTrigger>
             <Textarea resize="none" height={'100%'} onChange={(e) => setRequest(e.target.value)} />
           </PopoverTrigger>
