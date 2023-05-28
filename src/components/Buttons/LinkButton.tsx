@@ -7,6 +7,7 @@ interface ButtonProps {
   source: string;
   color?: string;
   width?: string;
+  testid?: string;
   handler?: MouseEventHandler;
 }
 
@@ -20,6 +21,7 @@ export const LinkButton = (props: ButtonProps) => {
       w={props.width}
       minW="80px"
       h={'40px'}
+      data-testid={props.testid}
       borderBottomRightRadius="0.5rem"
       borderBottomLeftRadius="0"
       borderTopLeftRadius="1rem"
