@@ -8,6 +8,8 @@ export default defineConfig({
       codeCoverageTask(on, config);
       return config;
     },
+    viewportWidth: 1920,
+    viewportHeight: 1080,
   },
   component: {
     devServer: {

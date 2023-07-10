@@ -25,3 +25,4 @@ dist-ssr
 .env
 .nyc_output
 coverage
+cypress/videos
